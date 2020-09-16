@@ -1,8 +1,11 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import UserContext from '../UserContext';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import { LOGIN_URL } from '../api/constants';
+
+import { Form, Input, Button, Row, Col } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 export const Login = () => {
   const { setUser } = useContext(UserContext);
@@ -25,7 +28,6 @@ export const Login = () => {
         email,
         password,
       });
-
       const { token } = data;
 
       setUser({ email, token });
@@ -41,12 +43,57 @@ export const Login = () => {
   return (
     <>
       <div>
-        <h2>Login</h2>
-        <input type='email' value={email} onChange={onEmailChange} />
-        <input type='password' value={password} onChange={onPasswordChange} />
-        <button onClick={onSubmit}>
-          <Link to='/welcome'>Submit</Link>
-        </button>
+        <Row justify='center' align='middle'>
+          <Col lg={8} md={8} sm={12} xs={24}>
+            <h1>Login</h1>
+            <Form name='normal_login' className='login-form'>
+              <Form.Item
+                name='email'
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input your Email!',
+                  },
+                ]}
+              >
+                <Input
+                  prefix={<UserOutlined className='site-form-item-icon' />}
+                  placeholder='Email'
+                  value={email}
+                  onChange={onEmailChange}
+                />
+              </Form.Item>
+              <Form.Item
+                name='password'
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input your Password!',
+                  },
+                ]}
+              >
+                <Input
+                  prefix={<LockOutlined className='site-form-item-icon' />}
+                  type='password'
+                  placeholder='Password'
+                  value={password}
+                  onChange={onPasswordChange}
+                />
+              </Form.Item>
+
+              <Form.Item>
+                <Button
+                  type='primary'
+                  htmlType='submit'
+                  className='login-form-button'
+                  onClick={onSubmit}
+                >
+                  Login
+                </Button>
+              </Form.Item>
+            </Form>
+          </Col>
+        </Row>
       </div>
       {statusMessage && <small>{statusMessage}</small>}
     </>
