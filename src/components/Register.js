@@ -9,6 +9,8 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 export const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [statusMessage, setStatusMessage] = useState('');
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
 
@@ -20,12 +22,22 @@ export const Register = () => {
     setPassword(event.target.value);
   };
 
+  const onFirstName = (event) => {
+    setFirstName(event.target.value);
+  };
+
+  const onLastName = (event) => {
+    setLastName(event.target.value);
+  };
+
   const onSubmit = async () => {
     const {
       data: { success, message },
     } = await axios.post(REGISTER_URL, {
       email,
       password,
+      firstName,
+      lastName,
     });
 
     if (success) {
@@ -41,7 +53,7 @@ export const Register = () => {
         <Row justify='center'>
           <Col span={8}>
             <h1>Register</h1>
-            <Form name='normal_login' className='login-form'>
+            <Form name='register_user' className='login-form'>
               <Form.Item
                 name='email'
                 rules={[
@@ -56,6 +68,40 @@ export const Register = () => {
                   placeholder='Email'
                   value={email}
                   onChange={onEmailChange}
+                />
+              </Form.Item>
+              <Form.Item
+                name='firstName'
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input your first name!',
+                  },
+                ]}
+              >
+                <Input
+                  prefix={<UserOutlined className='site-form-item-icon' />}
+                  type='text'
+                  placeholder='First Name'
+                  value={firstName}
+                  onChange={onFirstName}
+                />
+              </Form.Item>
+              <Form.Item
+                name='lastName'
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input your last name!',
+                  },
+                ]}
+              >
+                <Input
+                  prefix={<UserOutlined className='site-form-item-icon' />}
+                  type='text'
+                  placeholder='Last Name'
+                  value={lastName}
+                  onChange={onLastName}
                 />
               </Form.Item>
               <Form.Item
@@ -79,7 +125,6 @@ export const Register = () => {
               <Form.Item>
                 <Button
                   type='primary'
-                  htmlType='submit'
                   className='login-form-button'
                   onClick={onSubmit}
                 >

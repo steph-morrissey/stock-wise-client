@@ -46,7 +46,7 @@ export const Login = () => {
         <Row justify='center' align='middle'>
           <Col lg={8} md={8} sm={12} xs={24}>
             <h1>Login</h1>
-            <Form name='normal_login' className='login-form'>
+            <Form name='user_login' className='login-form'>
               <Form.Item
                 name='email'
                 rules={[
@@ -84,7 +84,6 @@ export const Login = () => {
               <Form.Item>
                 <Button
                   type='primary'
-                  htmlType='submit'
                   className='login-form-button'
                   onClick={onSubmit}
                 >

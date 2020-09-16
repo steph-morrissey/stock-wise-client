@@ -13,10 +13,6 @@ import {
 
 const { SubMenu } = Menu;
 
-function handleClick(e) {
-  console.log('click', e);
-}
-
 class Navbar extends React.Component {
   state = {
     collapsed: false,
@@ -36,7 +32,7 @@ class Navbar extends React.Component {
           onClick={this.toggleCollapsed}
           style={{ marginBottom: 16 }}
         ></Button>
-        <Menu onClick={handleClick} mode='vertical'>
+        <Menu mode='vertical'>
           <Menu.Item key='1' icon={<LoginOutlined />}>
             <Link to='/login'>Login</Link>
           </Menu.Item>
