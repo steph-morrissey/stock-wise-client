@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-import { Menu, PageHeader, Button } from 'antd';
+import { Menu, PageHeader, Divider} from 'antd';
 import {
   UserOutlined,
   LoginOutlined,
@@ -14,34 +13,23 @@ import {
 const { SubMenu } = Menu;
 
 class Navbar extends React.Component {
-  state = {
-    collapsed: false,
-  };
 
-  toggleCollapsed = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
-  };
   render() {
     return (
-      <div className='scrollable-container'>
-        <PageHeader className='site-page-header' title='Stock Wise' />
-        <Button
-          type='primary'
-          onClick={this.toggleCollapsed}
-          style={{ marginBottom: 16 }}
-        ></Button>
-        <Menu mode='vertical'>
+      <div className='scrollable-container' >
+        <PageHeader className='site-page-header' title='Stock Wise'/>
+        <Menu mode='vertical' style={{backgroundColor: "#F6F9FE"}}>
           <Menu.Item key='1' icon={<LoginOutlined />}>
             <Link to='/login'>Login</Link>
           </Menu.Item>
           <Menu.Item key='2' icon={<UserOutlined />}>
             <Link to='/register'>Register</Link>
           </Menu.Item>
+          <Divider />
           <Menu.Item key='3' icon={<ScheduleOutlined />}>
             Dashboard
           </Menu.Item>
+          <Divider />
           <SubMenu key='sub1' icon={<PlusOutlined />} title='Add to Inventory'>
             <Menu.Item key='4'>Add a Supplier</Menu.Item>
             <Menu.Item key='5'>Add a Category</Menu.Item>

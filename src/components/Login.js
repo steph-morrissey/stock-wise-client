@@ -43,8 +43,8 @@ export const Login = () => {
   return (
     <>
       <div>
-        <Row justify='center' align='middle'>
-          <Col lg={8} md={8} sm={12} xs={24}>
+        <Row justify='center' align='middle' style={{height: "100vh"}}>
+          <Col  xs={20} sm={10}lg={8}>
             <h1>Login</h1>
             <Form name='user_login' className='login-form'>
               <Form.Item
@@ -83,7 +83,7 @@ export const Login = () => {
 
               <Form.Item>
                 <Button
-                  type='primary'
+                  type='danger'
                   className='login-form-button'
                   onClick={onSubmit}
                 >

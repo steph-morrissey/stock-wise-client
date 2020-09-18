@@ -50,8 +50,8 @@ export const Register = () => {
   return (
     <>
       <div>
-        <Row justify='center'>
-          <Col span={8}>
+        <Row justify='center' align='middle' style={{backgroundColor:"#FFF",height: "100vh"}}>
+          <Col xs={20} sm={12}lg={8}> 
             <h1>Register</h1>
             <Form name='register_user' className='login-form'>
               <Form.Item
@@ -123,12 +123,12 @@ export const Register = () => {
               </Form.Item>
 
               <Form.Item>
-                <Button
-                  type='primary'
-                  className='login-form-button'
+              <Button
+                  type='danger'
+                  className='register-form-button'
                   onClick={onSubmit}
                 >
-                  Login
+                  Submit
                 </Button>
               </Form.Item>
             </Form>

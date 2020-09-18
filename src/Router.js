@@ -29,13 +29,13 @@ export const Router = () => {
       <Layout style={{ backgroundColor: '#FFF' }}>
         <Sider
           style={{
-            backgroundColor: '#FFF',
-            marginRight: '100px',
+            backgroundColor: '#F6F9FE',
+            height: '100vh'
           }}
         >
           <Navbar />
         </Sider>
-        <Content style={{ backgroundColor: '#FFF', marginTop: '30px' }}>
+        <Content style={{ backgroundColor: '#FFF'}}>
           <Switch>
             <Route exact path='/login' component={Login} />
             <Route exact path='/register' component={Register} />
