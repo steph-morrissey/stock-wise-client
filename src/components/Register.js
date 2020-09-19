@@ -7,28 +7,8 @@ import { Form, Input, Button, Alert, Row, Col } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 export const Register = () => {
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [firstName, setFirstName] = useState('');
-  // const [lastName, setLastName] = useState('');
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [error, setError] = useState('');
-
-  // const onEmailChange = (event) => {
-  //   setEmail(event.target.value);
-  // };
-
-  // const onPasswordChange = (event) => {
-  //   setPassword(event.target.value);
-  // };
-
-  // const onFirstName = (event) => {
-  //   setFirstName(event.target.value);
-  // };
-
-  // const onLastName = (event) => {
-  //   setLastName(event.target.value);
-  // };
 
   const onFinish = async (values) => {
     try {
