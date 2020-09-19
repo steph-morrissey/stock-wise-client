@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'antd/dist/antd.css';
-import './App.css';
-import Navigation from './components/Navigation';
-import ProductForm from './components/ProductFrom';
-function App() {
+
+import { Router } from './Router';
+import UserContext from './UserContext';
+
+const App = () => {
+  const [user, setUser] = useState({});
   return (
-    <div className='App'>
-      <Navigation />
-      <ProductForm />
+    <div>
+      <UserContext.Provider value={{ user, setUser }}>
+        <Router />
+      </UserContext.Provider>
     </div>
   );
-}
+};
 
 export default App;
