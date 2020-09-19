@@ -4,39 +4,20 @@ import UserContext from '../UserContext';
 //import { Link } from 'react-router-dom';
 import { LOGIN_URL } from '../api/constants';
 
-import { Form, Input, Button, Row, Col } from 'antd';
+import { Form, Input, Button, Row, Col, Alert } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 export const Login = () => {
   const { setUser } = useContext(UserContext);
+  const [error, setError] = useState('');
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [statusMessage, setStatusMessage] = useState('');
-
-  const onEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const onPasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const onSubmit = async () => {
+  const onFinish = async (values) => {
     try {
-      const { data } = await axios.post(LOGIN_URL, {
-        email,
-        password,
-      });
-      const { token } = data;
+      const { data } = await axios.post(LOGIN_URL, values);
 
-      setUser({ email, token });
+      setUser(data);
     } catch (error) {
-      if (error.response.data.message) {
-        setStatusMessage(error.response.data.message);
-      } else {
-        setStatusMessage('Something went wrong with our servers!');
-      }
+      setError(error.message)
     }
   };
 
@@ -46,7 +27,7 @@ export const Login = () => {
         <Row justify='center' align='middle' style={{height: "100vh"}}>
           <Col  xs={20} sm={10}lg={8}>
             <h1>Login</h1>
-            <Form name='user_login' className='login-form'>
+            <Form name='user_login' className='login-form' onFinish={onFinish}>
               <Form.Item
                 name='email'
                 rules={[
@@ -59,8 +40,6 @@ export const Login = () => {
                 <Input
                   prefix={<UserOutlined className='site-form-item-icon' />}
                   placeholder='Email'
-                  value={email}
-                  onChange={onEmailChange}
                 />
               </Form.Item>
               <Form.Item
@@ -76,8 +55,6 @@ export const Login = () => {
                   prefix={<LockOutlined className='site-form-item-icon' />}
                   type='password'
                   placeholder='Password'
-                  value={password}
-                  onChange={onPasswordChange}
                 />
               </Form.Item>
 
@@ -85,16 +62,18 @@ export const Login = () => {
                 <Button
                   type='danger'
                   className='login-form-button'
-                  onClick={onSubmit}
+                  htmlType="submit"
                 >
                   Login
                 </Button>
               </Form.Item>
             </Form>
+            {
+              error ? <Alert message={error} type="error" /> : null
+            }
           </Col>
         </Row>
       </div>
-      {statusMessage && <small>{statusMessage}</small>}
     </>
   );
 };

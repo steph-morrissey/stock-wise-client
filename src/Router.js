@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { HashRouter, Switch, Route } from 'react-router-dom';
+import { Redirect, HashRouter, Switch, Route } from 'react-router-dom';
 import { Layout } from 'antd';
 
 import UserContext from './UserContext';
@@ -11,18 +11,8 @@ import { Welcome } from './components/Welcome';
 
 const { Content, Sider } = Layout;
 
-const UnauthorisedWrapper = (props) => {
-  return (
-    <div>
-      <p>Please login before accessing the welcome page</p>
-      {props.children}
-    </div>
-  );
-};
-
 export const Router = () => {
-  const userContext = useContext(UserContext);
-  const { user } = userContext;
+  const { user } = useContext(UserContext);
 
   return (
     <HashRouter>
@@ -37,16 +27,14 @@ export const Router = () => {
         </Sider>
         <Content style={{ backgroundColor: '#FFF'}}>
           <Switch>
-            <Route exact path='/login' component={Login} />
-            <Route exact path='/register' component={Register} />
-            <Route exact path='/welcome'>
-              {user.token ? (
-                <Welcome />
-              ) : (
-                <UnauthorisedWrapper>
-                  <Login />
-                </UnauthorisedWrapper>
-              )}
+            <Route path="/login" exact>
+              {user.token ? <Redirect to="/welcome" /> : <Login />}
+            </Route>
+            <Route path="/register" exact>
+              {user.token ? <Redirect to="/welcome" /> : <Register />}
+            </Route>
+            <Route path="/welcome" exact>
+              {user.token ? <Welcome /> : <Redirect to="/login" />}
             </Route>
           </Switch>
         </Content>
