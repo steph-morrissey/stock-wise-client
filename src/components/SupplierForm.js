@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, Radio } from 'antd';
+import { Form, Input, Row, Col } from 'antd';
 
 const SupplierForm = () => {
   const [componentSize, setComponentSize] = useState('default');
@@ -10,72 +10,71 @@ const SupplierForm = () => {
 
   return (
     <>
-      <Form
-        labelCol={{
-          span: 4,
-        }}
-        wrapperCol={{
-          span: 14,
-        }}
-        layout='horizontal'
-        initialValues={{
-          size: componentSize,
-        }}
-        onValuesChange={onFormLayoutChange}
-        size={componentSize}
-      >
-        <Form.Item label='Form Size' name='size'>
-          <Radio.Group>
-            <Radio.Button value='small'>Small</Radio.Button>
-            <Radio.Button value='default'>Default</Radio.Button>
-            <Radio.Button value='large'>Large</Radio.Button>
-          </Radio.Group>
-        </Form.Item>
-        <Form.Item label='Supplier Name'>
-          <Input />
-        </Form.Item>
-        <Form.Item label='Phone Number'>
-          <Input />
-        </Form.Item>
-        <Form.Item label='Address'>
-          <Input.Group compact>
-            <Form.Item
-              name={['address', 'firstLine']}
-              noStyle
-              rules={[
-                { required: true, message: 'Enter first line of address' },
-              ]}
-            >
-              <Input placeholder='First line of address' />
+      <Row justify='center' align='middle' style={{ height: '100vh' }}>
+        <Col span={10}>
+          <Form
+            labelCol={{
+              span: 4,
+            }}
+            layout='horizontal'
+            initialValues={{
+              size: componentSize,
+            }}
+            onValuesChange={onFormLayoutChange}
+            size={componentSize}
+          >
+            <Form.Item label='Supplier Name'>
+              <Input />
             </Form.Item>
-            <Form.Item
-              name={['address', 'secondLine']}
-              noStyle
-              rules={[
-                { required: true, message: 'Enter second line of address' },
-              ]}
-            >
-              <Input placeholder='Second line of address' />
+            <Form.Item label='Phone Number'>
+              <Input />
             </Form.Item>
-            <Form.Item
-              name={['address', 'thirdLine']}
-              noStyle
-              rules={[{ required: false }]}
-            >
-              <Input placeholder='Third line of address (optional)' />
+            <Form.Item label='Address'>
+              <Input.Group compact>
+                <Form.Item
+                  name={['address', 'firstLine']}
+                  noStyle
+                  rules={[
+                    { required: true, message: 'Enter first line of address' },
+                  ]}
+                >
+                  <Input placeholder='First line of address' />
+                </Form.Item>
+                <Form.Item
+                  name={['address', 'secondLine']}
+                  noStyle
+                  rules={[
+                    { required: true, message: 'Enter second line of address' },
+                  ]}
+                >
+                  <Input placeholder='Second line of address' />
+                </Form.Item>
+                <Form.Item
+                  name={['address', 'thirdLine']}
+                  noStyle
+                  rules={[{ required: false }]}
+                >
+                  <Input placeholder='Third line of address (optional)' />
+                </Form.Item>
+                <Form.Item
+                  name={['address', 'postcode']}
+                  noStyle
+                  rules={[
+                    { required: true, message: 'Please enter your postcode' },
+                  ]}
+                >
+                  <Input style={{ width: '50%' }} placeholder='Postcode' />
+                </Form.Item>
+              </Input.Group>
             </Form.Item>
-            <Form.Item
-              name={['address', 'postcode']}
-              noStyle
-              rules={[
-                { required: true, message: 'Please enter your postcode' },
-              ]}
-            >
-              <Input style={{ width: '50%' }} placeholder='Postcode' />
+            <Form.Item>
+              <Button type='primary' danger>
+                Submit
+              </Button>
             </Form.Item>
-          </Input.Group>
-        </Form.Item>
-      </Form>
+          </Form>
+        </Col>
+      </Row>
     </>
   );
 };

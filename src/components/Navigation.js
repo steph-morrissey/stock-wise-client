@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const Navigation = () => {
   return <h1>Stock Wise</h1>;

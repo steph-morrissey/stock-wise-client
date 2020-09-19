@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, Radio } from 'antd';
+import { Form, Input, Button, Row, Col } from 'antd';
 
 const CategoryForm = () => {
   const [componentSize, setComponentSize] = useState('default');
@@ -10,31 +10,30 @@ const CategoryForm = () => {
 
   return (
     <>
-      <Form
-        labelCol={{
-          span: 4,
-        }}
-        wrapperCol={{
-          span: 14,
-        }}
-        layout='horizontal'
-        initialValues={{
-          size: componentSize,
-        }}
-        onValuesChange={onFormLayoutChange}
-        size={componentSize}
-      >
-        <Form.Item label='Form Size' name='size'>
-          <Radio.Group>
-            <Radio.Button value='small'>Small</Radio.Button>
-            <Radio.Button value='default'>Default</Radio.Button>
-            <Radio.Button value='large'>Large</Radio.Button>
-          </Radio.Group>
-        </Form.Item>
-        <Form.Item label='Category Name'>
-          <Input />
-        </Form.Item>
-      </Form>
+      <Row justify='center' align='middle' style={{ height: '100vh' }}>
+        <Col span={10}>
+          <Form
+            labelCol={{
+              span: 4,
+            }}
+            layout='horizontal'
+            initialValues={{
+              size: componentSize,
+            }}
+            onValuesChange={onFormLayoutChange}
+            size={componentSize}
+          >
+            <Form.Item label='Category Name'>
+              <Input />
+            </Form.Item>
+            <Form.Item>
+              <Button type='primary' danger>
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
+        </Col>
+      </Row>
     </>
   );
 };
