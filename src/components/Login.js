@@ -17,15 +17,15 @@ export const Login = () => {
 
       setUser(data);
     } catch (error) {
-      setError(error.message)
+      setError(error.message);
     }
   };
 
   return (
     <>
       <div>
-        <Row justify='center' align='middle' style={{height: "100vh"}}>
-          <Col  xs={20} sm={10}lg={8}>
+        <Row justify='center' align='middle' style={{ height: '100vh' }}>
+          <Col xs={20} sm={10} lg={8}>
             <h1>Login</h1>
             <Form name='user_login' className='login-form' onFinish={onFinish}>
               <Form.Item
@@ -62,15 +62,13 @@ export const Login = () => {
                 <Button
                   type='danger'
                   className='login-form-button'
-                  htmlType="submit"
+                  htmlType='submit'
                 >
                   Login
                 </Button>
               </Form.Item>
             </Form>
-            {
-              error ? <Alert message={error} type="error" /> : null
-            }
+            {error ? <Alert message={error} type='error' /> : null}
           </Col>
         </Row>
       </div>
