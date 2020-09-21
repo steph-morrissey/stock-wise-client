@@ -10,14 +10,12 @@ const CategoryForm = () => {
 
   const onFinish = async (values) => {
     try {
-      console.log(values);
       const { data: category } = await axios.post(CATEGORIES_URI, values, {
         headers: {
           Authorization: `Bearer ${user.token}`,
           'Content-Type': 'application/json',
         },
       });
-      console.log(category);
     } catch (err) {
       setError(err);
       if (err) throw error;

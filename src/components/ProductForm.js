@@ -70,14 +70,12 @@ const ProductForm = () => {
 
   const onFinish = async (values) => {
     try {
-      console.log(values);
       const { data: product } = await axios.post(PRODUCTS_URI, values, {
         headers: {
           Authorization: `Bearer ${user.token}`,
           'Content-Type': 'application/json',
         },
       });
-      console.log(product);
     } catch (err) {
       setError(err);
       if (err) throw error;
