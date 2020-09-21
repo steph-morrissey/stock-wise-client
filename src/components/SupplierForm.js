@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, Row, Col } from 'antd';
+import { Form, Input, Button, Row, Col } from 'antd';
 
 const SupplierForm = () => {
   const [componentSize, setComponentSize] = useState('default');
