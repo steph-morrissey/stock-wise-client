@@ -7,7 +7,10 @@ import UserContext from './UserContext';
 import Navbar from './components/Navbar';
 import { Register } from './components/Register';
 import { Login } from './components/Login';
-import { Welcome } from './components/Welcome';
+import { Dashboard } from './components/Dashboard';
+import { Categories } from './pages/Categories';
+import { Suppliers } from './pages/Suppliers';
+import { Products } from './pages/Products';
 
 const { Content, Sider } = Layout;
 
@@ -20,21 +23,30 @@ export const Router = () => {
         <Sider
           style={{
             backgroundColor: '#F6F9FE',
-            height: '100vh'
+            height: '100vh',
           }}
         >
           <Navbar />
         </Sider>
-        <Content style={{ backgroundColor: '#FFF'}}>
+        <Content style={{ backgroundColor: '#FFF' }}>
           <Switch>
-            <Route path="/login" exact>
-              {user.token ? <Redirect to="/welcome" /> : <Login />}
+            <Route path='/login' exact>
+              {user.token ? <Redirect to='/dashboard' /> : <Login />}
             </Route>
-            <Route path="/register" exact>
-              {user.token ? <Redirect to="/welcome" /> : <Register />}
+            <Route path='/register' exact>
+              {user.token ? <Redirect to='/dashboard' /> : <Register />}
             </Route>
-            <Route path="/welcome" exact>
-              {user.token ? <Welcome /> : <Redirect to="/login" />}
+            <Route path='/dashboard' exact>
+              {user.token ? <Dashboard /> : <Redirect to='/login' />}
+            </Route>
+            <Route path='/suppliers' exact>
+              {user.token ? <Suppliers /> : <Redirect to='/login' />}
+            </Route>
+            <Route path='/categories' exact>
+              {user.token ? <Categories /> : <Redirect to='/login' />}
+            </Route>
+            <Route path='/products' exact>
+              {user.token ? <Products /> : <Redirect to='/login' />}
             </Route>
           </Switch>
         </Content>

@@ -31,13 +31,19 @@ const Navbar = () => {
           </Menu.Item>
           <Menu.Divider />
           <Menu.Item key='3' icon={<ScheduleOutlined />}>
-            Dashboard
+            <Link to='/dashboard'>Dashboard</Link>
           </Menu.Item>
           <Menu.Divider />
           <SubMenu key='sub1' icon={<PlusOutlined />} title='Add to Inventory'>
-            <Menu.Item key='4'>Add a Supplier</Menu.Item>
-            <Menu.Item key='5'>Add a Category</Menu.Item>
-            <Menu.Item key='6'>Add a Product</Menu.Item>
+            <Menu.Item key='4'>
+              <Link to='/suppliers'>Add a Supplier</Link>
+            </Menu.Item>
+            <Menu.Item key='5'>
+              <Link to='/categories'>Add a Category</Link>
+            </Menu.Item>
+            <Menu.Item key='6'>
+              <Link to='/products'>Add a Product</Link>
+            </Menu.Item>
           </SubMenu>
           <SubMenu
             key='sub2'

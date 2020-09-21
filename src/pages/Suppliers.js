@@ -1,6 +1,6 @@
 import React from 'react';
-import SupplierForm from './SupplierForm';
-export const Welcome = () => {
+import SupplierForm from '../components/SupplierForm';
+export const Suppliers = () => {
   return (
     <div>
       <SupplierForm />
