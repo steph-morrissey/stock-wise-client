@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import UserContext from '../UserContext';
-//import { Link } from 'react-router-dom';
 import { LOGIN_URL } from '../api/constants';
 
 import { Form, Input, Button, Row, Col, Alert } from 'antd';
