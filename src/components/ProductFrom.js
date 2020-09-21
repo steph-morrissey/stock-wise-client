@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Form, Input, Select, Button, Row, Col } from 'antd';
-import { CATEGORIES_URI, SUPPLIERS_URI } from '../api/constants';
+import {
+  CATEGORIES_URI,
+  SUPPLIERS_URI,
+  ADD_PRODUCT_URI,
+} from '../api/constants';
 
 import UserContext from '../UserContext';
 
@@ -11,6 +15,7 @@ const ProductForm = () => {
   const [suppliers, setSuppliers] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -36,13 +41,21 @@ const ProductForm = () => {
     fetchData();
   }, []);
 
+  const handleOnChange = (value) => {
+    console.log(value);
+  };
+
   const Dropdown = ({ items }) => {
-    console.log(items);
     return (
-      <Select>
+      <Select onChange={handleOnChange}>
         {items.map((item) => {
           return (
-            <Select.Option value={item._id} key={item._id}>
+            <Select.Option
+              key={item._id}
+              name={item.name}
+              label={item.name}
+              value={item.name}
+            >
               {item.name}
             </Select.Option>
           );
@@ -50,6 +63,23 @@ const ProductForm = () => {
       </Select>
     );
   };
+
+  const onFinish = async (values) => {
+    try {
+      console.log(values);
+      const { data: product } = await axios.post(ADD_PRODUCT_URI, values, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log(product);
+    } catch (err) {
+      setError(err);
+      if (err) throw error;
+    }
+  };
+
   if (!loading) {
     return (
       <>
@@ -60,24 +90,25 @@ const ProductForm = () => {
                 span: 4,
               }}
               layout='horizontal'
+              onFinish={onFinish}
             >
-              <Form.Item label='Category'>
+              <Form.Item name='category' label='Category'>
                 <Dropdown items={categories} />
               </Form.Item>
-              <Form.Item label='Supplier'>
+              <Form.Item name='supplier' label='Supplier'>
                 <Dropdown items={suppliers} />
               </Form.Item>
-              <Form.Item label='Product Name'>
-                <Input />
+              <Form.Item name='productName' label='Product Name'>
+                <Input type='text' />
               </Form.Item>
-              <Form.Item label='Cost Price'>
-                <Input />
+              <Form.Item name='costPrice' label='Cost Price'>
+                <Input type='text' />
               </Form.Item>
-              <Form.Item label='Selling Price'>
-                <Input />
+              <Form.Item name='sellingPrice' label='Selling Price'>
+                <Input type='text' />
               </Form.Item>
               <Form.Item>
-                <Button type='primary' danger>
+                <Button type='primary' danger htmlType='submit'>
                   Submit
                 </Button>
               </Form.Item>

@@ -1,11 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Form, Input, Button, Row, Col } from 'antd';
+import { CATEGORIES_URI } from '../api/constants';
+import axios from 'axios';
+import UserContext from '../UserContext';
 
 const CategoryForm = () => {
-  const [componentSize, setComponentSize] = useState('default');
+  const { user } = useContext(UserContext);
+  const [error, setError] = useState('');
 
-  const onFormLayoutChange = ({ size }) => {
-    setComponentSize(size);
+  const onFinish = async (values) => {
+    try {
+      console.log(values);
+      const { data: category } = await axios.post(CATEGORIES_URI, values, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log(category);
+    } catch (err) {
+      setError(err);
+      if (err) throw error;
+    }
   };
 
   return (
@@ -17,17 +33,13 @@ const CategoryForm = () => {
               span: 4,
             }}
             layout='horizontal'
-            initialValues={{
-              size: componentSize,
-            }}
-            onValuesChange={onFormLayoutChange}
-            size={componentSize}
+            onFinish={onFinish}
           >
-            <Form.Item label='Category Name'>
-              <Input />
+            <Form.Item name='name' label='Category Name'>
+              <Input type='text' />
             </Form.Item>
             <Form.Item>
-              <Button type='primary' danger>
+              <Button type='primary' htmlType='submit' danger>
                 Submit
               </Button>
             </Form.Item>

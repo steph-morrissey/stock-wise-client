@@ -1,9 +1,10 @@
 import React from 'react';
-import ProductFrom from './ProductFrom';
+//import ProductFrom from './ProductFrom';
+import CategoryForm from './CategoryForm';
 export const Welcome = () => {
   return (
     <div>
-      <ProductFrom />
+      <CategoryForm />
     </div>
   );
 };
