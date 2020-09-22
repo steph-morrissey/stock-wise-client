@@ -1,8 +1,9 @@
 import React from 'react';
+import DeleteProduct from '../components/DeleteProduct';
 export const DeleteProducts = () => {
   return (
     <div>
-      <h1>Delete a Product</h1>
+      <DeleteProduct />
     </div>
   );
 };
