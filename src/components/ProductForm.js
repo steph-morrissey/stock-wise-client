@@ -124,7 +124,7 @@ const ProductForm = () => {
       </>
     );
   }
-  return null;
+  return <h1>Loading...</h1>;
 };
 
 export default ProductForm;
