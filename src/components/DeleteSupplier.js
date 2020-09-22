@@ -1,70 +1,48 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Card, Spin, Row, Col } from 'antd';
+import { List, Spin, Row, Col } from 'antd';
 import axios from 'axios';
-import { PRODUCTS_URI } from '../api/constants';
+import { SUPPLIERS_URI } from '../api/constants';
 
 import UserContext from '../UserContext';
 
-const DeleteProducts = () => {
+const DeleteSupplier = () => {
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
-  const [products, setProducts] = useState('');
+  const [suppliers, setSuppliers] = useState('');
   const [error, setError] = useState('');
 
-  const getProducts = async () => {
-    const { data } = await axios.get(PRODUCTS_URI, {
+  const getSuppliers = async () => {
+    const { data } = await axios.get(SUPPLIERS_URI, {
       headers: { Authorization: `Bearer ${user.token}` },
     });
-    setProducts(data);
+    setSuppliers(data);
   };
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchSuppliers = async () => {
       try {
-        await getProducts();
+        await getSuppliers();
         setLoading(false);
       } catch (err) {
         setError(err.message);
         if (err) throw error;
       }
     };
-    fetchProducts();
+    fetchSuppliers();
   }, []);
 
   const handleDelete = async (event) => {
     event.preventDefault();
     const id = event.target.getAttribute('id');
     try {
-      const { data } = await axios.delete(`${PRODUCTS_URI}/${id}`, {
+      const { data } = await axios.delete(`${SUPPLIERS_URI}/${id}`, {
         headers: { Authorization: `Bearer ${user.token}` },
       });
-      await getProducts();
+      await getSuppliers();
     } catch (err) {
       setError(err.message);
       if (err) throw error;
     }
-  };
-
-  const RenderProductCard = ({ items }) => {
-    return items.map((item) => {
-      return (
-        <div className='site-card-border-less-wrapper'>
-          <Card
-            title={item.name}
-            bordered={false}
-            extra={
-              <a key={item._id} id={item._id} onClick={handleDelete}>
-                delete
-              </a>
-            }
-          >
-            <p>Status: {item.status}</p>
-            <p>Cost Price: {item.costPrice}</p>
-            <p>Selling Price: {item.sellingPrice}</p>
-          </Card>
-        </div>
-      );
-    });
   };
 
   if (!loading) {
@@ -73,7 +51,24 @@ const DeleteProducts = () => {
         <Row justify='center' align='middle'>
           <Col span={20}>
             <>
-              <RenderProductCard items={products} />
+              <List
+                size='large'
+                header={<div>Suppliers</div>}
+                bordered
+                dataSource={suppliers}
+                itemLayout='horizontal'
+                renderItem={(item) => (
+                  <List.Item
+                    actions={[
+                      <a key='item._id' id={item._id} onClick={handleDelete}>
+                        delete
+                      </a>,
+                    ]}
+                  >
+                    {item.name}
+                  </List.Item>
+                )}
+              />
             </>
           </Col>
         </Row>
@@ -89,4 +84,4 @@ const DeleteProducts = () => {
   );
 };
 
-export default DeleteProducts;
+export default DeleteSupplier;
