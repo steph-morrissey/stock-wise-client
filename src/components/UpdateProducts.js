@@ -1,9 +1,21 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Card, Spin, Form, Input, Button, Row, Col } from 'antd';
+import {
+  Card,
+  Spin,
+  Form,
+  Input,
+  Button,
+  Alert,
+  Typography,
+  Row,
+  Col,
+} from 'antd';
 import axios from 'axios';
 import { PRODUCTS_URI } from '../api/constants';
 
 import UserContext from '../UserContext';
+
+const { Title, Text } = Typography;
 
 const UpdateProducts = () => {
   const { user } = useContext(UserContext);
@@ -11,6 +23,7 @@ const UpdateProducts = () => {
   const [updateProduct, setUpdateProduct] = useState(false);
   const [products, setProducts] = useState('');
   const [newProduct, setNewProduct] = useState('');
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
   const getProducts = async () => {
@@ -46,22 +59,18 @@ const UpdateProducts = () => {
 
   const onFinish = async (values) => {
     const id = newProduct._id;
-    const product = Object.values(values)[0];
-    console.log(values);
-    const payload = Object.keys(values).map((item, index) => {
-    });
-    console.log(payload);
 
-    await axios.put(
-      `${PRODUCTS_URI}/${id}`,
-      { name: product },
-      {
-        headers: { Authorization: `Bearer ${user.token}` },
-      },
-    );
+    await axios.put(`${PRODUCTS_URI}/${id}`, values, {
+      headers: { Authorization: `Bearer ${user.token}` },
+    });
     getProducts();
     setLoading(false);
     setUpdateProduct(false);
+    setSuccess(true);
+  };
+
+  const onClose = () => {
+    setSuccess(false);
   };
 
   const RenderProductCards = ({ items }) => {
@@ -70,7 +79,7 @@ const UpdateProducts = () => {
         <div className='site-card-border-less-wrapper'>
           <Card
             key={item._id}
-            title={item.name}
+            title={<Title level={3}>{item.name}</Title>}
             bordered={false}
             extra={
               <a key={item._id} id={item._id} onClick={handleUpdate}>
@@ -78,9 +87,17 @@ const UpdateProducts = () => {
               </a>
             }
           >
-            <p>Status: {item.status}</p>
-            <p>Cost Price: {item.costPrice}</p>
-            <p>Selling Price: {item.sellingPrice}</p>
+            <p>
+              <Text strong>Status: </Text>
+              {item.status}
+            </p>
+            <p>
+              <Text strong>Cost Price: </Text>
+              {item.costPrice}
+            </p>
+            <p>
+              <Text strong>Selling Price: </Text> {item.sellingPrice}
+            </p>{' '}
           </Card>
         </div>
       );
@@ -93,6 +110,15 @@ const UpdateProducts = () => {
         <Row justify='center' align='middle'>
           <Col span={20}>
             <>
+              {success ? (
+                <Alert
+                  message='Product successfully updated'
+                  type='success'
+                  closeText='OK'
+                  onClose={onClose}
+                />
+              ) : null}
+              <Title level={2}>Update a Product</Title>
               <RenderProductCards items={products} />
             </>
           </Col>
@@ -103,28 +129,33 @@ const UpdateProducts = () => {
 
   if (loading && updateProduct) {
     return (
-      <Form
-        name='updateProduct'
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-      >
-        <Form.Item label='Product Name' name={newProduct.name}>
-          <Input type='text' placeholder={newProduct.name} />
-        </Form.Item>
-        <Form.Item label='Category' name={newProduct.categoryId}>
-          <Input type='text' placeholder={newProduct.categoryId} />
-        </Form.Item>
-        <Form.Item label='Cost Price' name={newProduct.costPrice}>
-          <Input type='text' placeholder={newProduct.costPrice} />
-        </Form.Item>
-        <Form.Item label='Selling Price' name={newProduct.sellingPrice}>
-          <Input type='text' placeholder={newProduct.sellingPrice} />
-        </Form.Item>
-        <Form.Item label='Supplier' name={newProduct.supplierId}>
-          <Input type='text' placeholder={newProduct.supplierId} />
-        </Form.Item>
-        <Button htmlType='submit'>Submit</Button>
-      </Form>
+      <Row justify='center' align='middle'>
+        <Col span={20}>
+          <Title level={2}>Edit Product</Title>
+          <Form
+            name='updateProduct'
+            initialValues={newProduct}
+            onFinish={onFinish}
+          >
+            <Form.Item label='Product Name' name='name'>
+              <Input type='text' />
+            </Form.Item>
+            <Form.Item label='Category' name='categoryId'>
+              <Input type='text' />
+            </Form.Item>
+            <Form.Item label='Cost Price' name='costPrice'>
+              <Input type='text' />
+            </Form.Item>
+            <Form.Item label='Selling Price' name='sellingPrice'>
+              <Input type='text' />
+            </Form.Item>
+            <Form.Item label='Supplier' name='supplierId'>
+              <Input type='text' />
+            </Form.Item>
+            <Button htmlType='submit'>Submit</Button>
+          </Form>
+        </Col>
+      </Row>
     );
   }
   return (

@@ -1,9 +1,21 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { List, Spin, Form, Input, Button, Row, Col } from 'antd';
+import {
+  List,
+  Spin,
+  Form,
+  Input,
+  Button,
+  Alert,
+  Typography,
+  Row,
+  Col,
+} from 'antd';
 import axios from 'axios';
 import { CATEGORIES_URI } from '../api/constants';
 
 import UserContext from '../UserContext';
+
+const { Title } = Typography;
 
 const UpdateCategories = () => {
   const { user } = useContext(UserContext);
@@ -11,6 +23,7 @@ const UpdateCategories = () => {
   const [updateCategory, setUpdateCategory] = useState(false);
   const [categories, setCategories] = useState('');
   const [newCategory, setNewCategory] = useState('');
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
   const getCategories = async () => {
@@ -57,6 +70,11 @@ const UpdateCategories = () => {
     getCategories();
     setLoading(false);
     setUpdateCategory(false);
+    setSuccess(true);
+  };
+
+  const onClose = () => {
+    setSuccess(false);
   };
 
   if (!loading && !updateCategory) {
@@ -65,9 +83,17 @@ const UpdateCategories = () => {
         <Row justify='center' align='middle'>
           <Col span={20}>
             <>
+              {success ? (
+                <Alert
+                  message='Category successfully updated'
+                  type='success'
+                  closeText='OK'
+                  onClose={onClose}
+                />
+              ) : null}
+              <Title level={2}>Update a Category</Title>
               <List
                 size='large'
-                header={<div>Categories</div>}
                 bordered
                 dataSource={categories}
                 itemLayout='horizontal'
@@ -92,16 +118,17 @@ const UpdateCategories = () => {
 
   if (loading && updateCategory) {
     return (
-      <Form
-        name='updateCategory'
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-      >
-        <Form.Item label={newCategory.name} name={newCategory.name}>
-          <Input type='text' />
-        </Form.Item>
-        <Button htmlType='submit'>Submit</Button>
-      </Form>
+      <Row justify='center' align='middle'>
+        <Col span={20}>
+          <Title level={2}>Edit Category</Title>
+          <Form name='updateCategory' onFinish={onFinish}>
+            <Form.Item label='Category Name:' name='categoryName'>
+              <Input type='text' placeholder={newCategory.name} />
+            </Form.Item>
+            <Button htmlType='submit'>Submit</Button>
+          </Form>
+        </Col>
+      </Row>
     );
   }
   return (

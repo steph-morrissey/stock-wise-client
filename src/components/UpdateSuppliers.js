@@ -1,9 +1,21 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { List, Spin, Form, Input, Button, Row, Col } from 'antd';
+import {
+  List,
+  Spin,
+  Form,
+  Input,
+  Button,
+  Alert,
+  Typography,
+  Row,
+  Col,
+} from 'antd';
 import axios from 'axios';
 import { SUPPLIERS_URI } from '../api/constants';
 
 import UserContext from '../UserContext';
+
+const { Title } = Typography;
 
 const UpdateSuppliers = () => {
   const { user } = useContext(UserContext);
@@ -11,6 +23,7 @@ const UpdateSuppliers = () => {
   const [updateSupplier, setUpdateSupplier] = useState(false);
   const [suppliers, setSuppliers] = useState('');
   const [newSupplier, setNewSupplier] = useState('');
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
   const getSuppliers = async () => {
@@ -57,6 +70,11 @@ const UpdateSuppliers = () => {
     getSuppliers();
     setLoading(false);
     setUpdateSupplier(false);
+    setSuccess(true);
+  };
+
+  const onClose = () => {
+    setSuccess(false);
   };
 
   if (!loading && !updateSupplier) {
@@ -65,6 +83,15 @@ const UpdateSuppliers = () => {
         <Row justify='center' align='middle'>
           <Col span={20}>
             <>
+              {success ? (
+                <Alert
+                  message='Product successfully updated'
+                  type='success'
+                  closeText='OK'
+                  onClose={onClose}
+                />
+              ) : null}
+              <Title level={2}>Update a Supplier</Title>
               <List
                 size='large'
                 header={<div>Suppliers</div>}
@@ -92,16 +119,17 @@ const UpdateSuppliers = () => {
 
   if (loading && updateSupplier) {
     return (
-      <Form
-        name='updateSupplier'
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-      >
-        <Form.Item label={newSupplier.name} name={newSupplier.name}>
-          <Input type='text' />
-        </Form.Item>
-        <Button htmlType='submit'>Submit</Button>
-      </Form>
+      <Row justify='center' align='middle'>
+        <Col span={20}>
+          <Title level={2}>Edit Supplier</Title>
+          <Form name='updateSupplier' onFinish={onFinish}>
+            <Form.Item label='Supplier Name:' name='supplierName'>
+              <Input type='text' placeholder={newSupplier.name} />
+            </Form.Item>
+            <Button htmlType='submit'>Submit</Button>
+          </Form>
+        </Col>
+      </Row>
     );
   }
   return (

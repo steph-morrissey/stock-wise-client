@@ -1,14 +1,15 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { List, Spin, Row, Col } from 'antd';
+import { List, Spin, Alert, Typography, Row, Col } from 'antd';
 import axios from 'axios';
 import { CATEGORIES_URI } from '../api/constants';
 
 import UserContext from '../UserContext';
-
+const { Title } = Typography;
 const DeleteCategory = () => {
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState('');
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
   const getCategories = async () => {
@@ -39,10 +40,15 @@ const DeleteCategory = () => {
         headers: { Authorization: `Bearer ${user.token}` },
       });
       await getCategories();
+      setSuccess(true);
     } catch (err) {
       setError(err.message);
       if (err) throw error;
     }
+  };
+
+  const onClose = () => {
+    setSuccess(false);
   };
 
   if (!loading) {
@@ -51,9 +57,17 @@ const DeleteCategory = () => {
         <Row justify='center' align='middle'>
           <Col span={20}>
             <>
+              {success ? (
+                <Alert
+                  message='Category successfully deleted'
+                  type='success'
+                  closeText='OK'
+                  onClose={onClose}
+                />
+              ) : null}
+              <Title level={2}>Delete a Product</Title>
               <List
                 size='large'
-                header={<div>Categories</div>}
                 bordered
                 dataSource={categories}
                 itemLayout='horizontal'

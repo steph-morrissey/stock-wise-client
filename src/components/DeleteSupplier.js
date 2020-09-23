@@ -1,14 +1,17 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { List, Spin, Row, Col } from 'antd';
+import { List, Spin, Alert, Typography, Row, Col } from 'antd';
 import axios from 'axios';
 import { SUPPLIERS_URI } from '../api/constants';
 
 import UserContext from '../UserContext';
 
+const { Title } = Typography;
+
 const DeleteSupplier = () => {
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
   const [suppliers, setSuppliers] = useState('');
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
   const getSuppliers = async () => {
@@ -39,10 +42,15 @@ const DeleteSupplier = () => {
         headers: { Authorization: `Bearer ${user.token}` },
       });
       await getSuppliers();
+      setSuccess(true);
     } catch (err) {
       setError(err.message);
       if (err) throw error;
     }
+  };
+
+  const onClose = () => {
+    setSuccess(false);
   };
 
   if (!loading) {
@@ -51,9 +59,17 @@ const DeleteSupplier = () => {
         <Row justify='center' align='middle'>
           <Col span={20}>
             <>
+              {success ? (
+                <Alert
+                  message='Supplier successfully deleted'
+                  type='success'
+                  closeText='OK'
+                  onClose={onClose}
+                />
+              ) : null}
+              <Title level={2}>Delete a Product</Title>
               <List
                 size='large'
-                header={<div>Suppliers</div>}
                 bordered
                 dataSource={suppliers}
                 itemLayout='horizontal'

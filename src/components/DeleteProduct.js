@@ -1,14 +1,17 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Card, Spin, Row, Col } from 'antd';
+import { Card, Spin, Alert, Row, Typography, Col } from 'antd';
 import axios from 'axios';
 import { PRODUCTS_URI } from '../api/constants';
 
 import UserContext from '../UserContext';
 
+const { Text, Title } = Typography;
+
 const DeleteProducts = () => {
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState('');
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
   const getProducts = async () => {
@@ -39,10 +42,15 @@ const DeleteProducts = () => {
         headers: { Authorization: `Bearer ${user.token}` },
       });
       await getProducts();
+      setSuccess(true);
     } catch (err) {
       setError(err.message);
       if (err) throw error;
     }
+  };
+
+  const onClose = () => {
+    setSuccess(false);
   };
 
   const RenderProductCards = ({ items }) => {
@@ -51,7 +59,7 @@ const DeleteProducts = () => {
         <div className='site-card-border-less-wrapper'>
           <Card
             key={item._id}
-            title={item.name}
+            title={<Title level={3}>{item.name}</Title>}
             bordered={false}
             extra={
               <a key={item._id} id={item._id} onClick={handleDelete}>
@@ -59,9 +67,17 @@ const DeleteProducts = () => {
               </a>
             }
           >
-            <p>Status: {item.status}</p>
-            <p>Cost Price: {item.costPrice}</p>
-            <p>Selling Price: {item.sellingPrice}</p>
+            <p>
+              <Text strong>Status: </Text>
+              {item.status}
+            </p>
+            <p>
+              <Text strong>Cost Price: </Text>
+              {item.costPrice}
+            </p>
+            <p>
+              <Text strong>Selling Price: </Text> {item.sellingPrice}
+            </p>
           </Card>
         </div>
       );
@@ -74,6 +90,15 @@ const DeleteProducts = () => {
         <Row justify='center' align='middle'>
           <Col span={20}>
             <>
+              {success ? (
+                <Alert
+                  message='Product successfully deleted'
+                  type='success'
+                  closeText='OK'
+                  onClose={onClose}
+                />
+              ) : null}
+              <Title level={2}>Delete a Product</Title>
               <RenderProductCards items={products} />
             </>
           </Col>
