@@ -45,11 +45,12 @@ const DeleteProducts = () => {
     }
   };
 
-  const RenderProductCard = ({ items }) => {
+  const RenderProductCards = ({ items }) => {
     return items.map((item) => {
       return (
         <div className='site-card-border-less-wrapper'>
           <Card
+            key={item._id}
             title={item.name}
             bordered={false}
             extra={
@@ -73,7 +74,7 @@ const DeleteProducts = () => {
         <Row justify='center' align='middle'>
           <Col span={20}>
             <>
-              <RenderProductCard items={products} />
+              <RenderProductCards items={products} />
             </>
           </Col>
         </Row>

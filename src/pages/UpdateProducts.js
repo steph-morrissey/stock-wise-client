@@ -1,8 +1,9 @@
 import React from 'react';
+import UpdateProduct from '../components/UpdateProducts'
 export const UpdateProducts = () => {
   return (
     <div>
-      <h1>Update a Product</h1>
+      <UpdateProduct />
     </div>
   );
 };
