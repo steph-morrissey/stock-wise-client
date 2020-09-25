@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import axios from 'axios';
-import { Form, Input, Select, Button, Row, Col } from 'antd';
+import { Form, Input, Select, Button, Alert, Typography, Row, Col } from 'antd';
 import { CATEGORIES_URI, SUPPLIERS_URI, PRODUCTS_URI } from '../api/constants';
 
 import UserContext from '../UserContext';
+
+const { Title } = Typography;
 
 const ProductForm = () => {
   const formRef = useRef(null);
@@ -11,6 +13,7 @@ const ProductForm = () => {
   const [categories, setCategories] = useState('');
   const [suppliers, setSuppliers] = useState('');
   const [loading, setLoading] = useState(true);
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -76,25 +79,34 @@ const ProductForm = () => {
           'Content-Type': 'application/json',
         },
       });
+      setSuccess(true);
     } catch (err) {
       setError(err);
       if (err) throw error;
     }
   };
 
+  const onClose = () => {
+    setSuccess(false);
+  };
+
   if (!loading) {
     return (
       <>
         <Row justify='center' align='middle' style={{ height: '100vh' }}>
-          <Col span={10}>
-            <Form
-              labelCol={{
-                span: 4,
-              }}
-              layout='horizontal'
-              onFinish={onFinish}
-              ref={formRef}
-            >
+          <Col xs={20} sm={18} lg={10}>
+            <div style={{ padding: '10px' }}>
+              {success ? (
+                <Alert
+                  message='Product successfully added'
+                  type='success'
+                  closeText='OK'
+                  onClose={onClose}
+                />
+              ) : null}
+            </div>
+            <h1>Add a Product</h1>
+            <Form layout='horizontal' onFinish={onFinish} ref={formRef}>
               <Form.Item name='categoryId' label='Category'>
                 <Dropdown
                   items={categories}
@@ -113,18 +125,25 @@ const ProductForm = () => {
               <Form.Item name='sellingPrice' label='Selling Price'>
                 <Input type='text' />
               </Form.Item>
-              <Form.Item>
-                <Button type='primary' danger htmlType='submit'>
-                  Submit
-                </Button>
-              </Form.Item>
+              <Row>
+                <Col
+                  span={24}
+                  style={{
+                    textAlign: 'right',
+                  }}
+                >
+                  <Button type='primary' htmlType='submit' danger>
+                    Submit
+                  </Button>
+                </Col>
+              </Row>
             </Form>
           </Col>
         </Row>
       </>
     );
   }
-  return null;
+  return <h1>Loading...</h1>;
 };
 
 export default ProductForm;
