@@ -1,20 +1,23 @@
-import React, { useState, useContext, useEffect } from 'react';
-import axios from 'axios';
-import UserContext from '../UserContext';
-import { Modal, Card, Button, Typography, Row, Col, Spin } from 'antd';
-import { PRODUCTS_URI } from '../api/constants';
+import React, { useState, useContext, useEffect } from "react";
+import axios from "axios";
+import UserContext from "../UserContext";
+import { Modal, Row, Col, Spin, PageHeader, Select } from "antd";
+import { PRODUCTS_URI } from "../api/constants";
+import { ProductCards } from "../components/ProductCards";
 
-const { Title } = Typography;
+const { Option } = Select;
 
 export const Inventory = () => {
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
-  const [products, setProducts] = useState('');
-  const [error, setError] = useState('');
-  const [reportedProductId, setReportedProductId] = useState('');
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [error, setError] = useState("");
+  const [reportedProductId, setReportedProductId] = useState("");
   const [visible, setVisible] = useState(false);
   const [modalText, setModalText] = useState(
-    'Report this product as Low In Stock?',
+    "Report this product as Low In Stock?"
   );
   const [confirmLoading, setConfirmLoading] = useState(false);
 
@@ -22,7 +25,9 @@ export const Inventory = () => {
     const { data } = await axios.get(PRODUCTS_URI, {
       headers: { Authorization: `Bearer ${user.token}` },
     });
-    setProducts(data);
+    setProducts(data.products);
+    setFilteredProducts(data.products);
+    setCategories(data.categories);
   };
 
   useEffect(() => {
@@ -40,13 +45,13 @@ export const Inventory = () => {
 
   const showModal = (event) => {
     event.preventDefault();
-    const id = event.target.getAttribute('id');
+    const id = event.target.getAttribute("id");
     setReportedProductId(id);
     setVisible(true);
   };
 
   const handleOk = async () => {
-    setModalText('Product has been reported as Low In Stock.');
+    setModalText("Product has been reported as Low In Stock.");
     setConfirmLoading(true);
     setTimeout(() => {
       setVisible(false);
@@ -56,82 +61,73 @@ export const Inventory = () => {
     const id = reportedProductId;
     await axios.put(
       `${PRODUCTS_URI}/${id}`,
-      { status: 'Low In Stock' },
+      { status: "Low In Stock" },
       {
         headers: { Authorization: `Bearer ${user.token}` },
-      },
+      }
     );
 
     await getInventory();
   };
 
   const handleCancel = () => {
-    console.log('Clicked cancel button');
     setVisible(false);
   };
 
-  const RenderProductCards = ({ items }) => {
-    return items.map((item) => {
-      return (
-        <>
-          <Card
-            key={item._id}
-            title={item.name}
-            bordered={false}
-            style={{
-              margin: '20px',
-              backgroundColor: '#F6F9FE',
-            }}
-            id={item._id}
-            extra={
-              item.status !== 'Low In Stock' ? (
-                <Button>
-                  <a key={item._id} id={item._id} onClick={showModal}>
-                    Low In Stock
-                  </a>
-                </Button>
-              ) : null
-            }
-          >
-            <p>Status: {item.status}</p>
-            <p>Cost Price: {item.costPrice}</p>
-            <p>Selling Price: {item.sellingPrice}</p>
-          </Card>
-        </>
+  const handleChange = (categoryId) => {
+    if (categoryId) {
+      setFilteredProducts(
+        products.filter((each) => each.categoryId === categoryId)
       );
-    });
+    } else {
+      setFilteredProducts(products);
+    }
   };
 
   if (!loading) {
     return (
-      <>
-        <Title level={2}>View Inventory</Title>
-        <div className='site-card-wrapper'>
-          <Row justify='center' align='middle'>
-            <Col xs={20} sm={18} lg={12}>
-              <>
-                <Modal
-                  title='Report as Low In Stock'
-                  visible={visible}
-                  okText='Yes'
-                  onOk={handleOk}
-                  confirmLoading={confirmLoading}
-                  onCancel={handleCancel}
-                >
-                  <p>{modalText}</p>
-                </Modal>
-                <RenderProductCards items={products} />
-              </>
-            </Col>
-          </Row>
-        </div>
-      </>
+      <div className="site-card-wrapper">
+        <PageHeader title="View Inventory" />
+        <Row
+          style={{ display: "flex", flexWrap: "wrap" }}
+          justify="center"
+          align="middle"
+        >
+          <Select
+            placeholder="Select a option and change input text above"
+            onChange={handleChange}
+            allowClear
+            style={{ width: "50%" }}
+          >
+            {categories.map((category) => (
+              <Option value={category._id}>{category.name}</Option>
+            ))}
+          </Select>
+        </Row>
+        <Row
+          style={{ display: "flex", flexWrap: "wrap" }}
+          justify="center"
+          align="middle"
+        >
+          <Modal
+            title="Report as Low In Stock"
+            visible={visible}
+            okText="Yes"
+            onOk={handleOk}
+            confirmLoading={confirmLoading}
+            onCancel={handleCancel}
+          >
+            <p>{modalText}</p>
+          </Modal>
+          <ProductCards items={filteredProducts} showModal={showModal} />
+        </Row>
+      </div>
     );
   }
   return (
-    <Row justify='center' align='middle' style={{ height: '80vh' }}>
+    <Row justify="center" align="middle" style={{ height: "80vh" }}>
       <Col>
-        <Spin tip='Loading...'></Spin>
+        <Spin tip="Loading..."></Spin>
       </Col>
     </Row>
   );

@@ -3,11 +3,11 @@ import { useParams, useHistory } from "react-router-dom";
 import { Spin, Row, Col, PageHeader } from "antd";
 import axios from "axios";
 import UserContext from "../UserContext";
-import { SUPPLIERS_URI } from "../api/constants";
+import { CATEGORIES_URI } from "../api/constants";
 import { ProductCards } from "../components/ProductCards";
 
-export const Supplier = () => {
-  const history = useHistory()
+export const Category = () => {
+  const history = useHistory();
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState("");
@@ -15,8 +15,8 @@ export const Supplier = () => {
 
   const { id } = useParams();
 
-  const getProductsBySupplier = async () => {
-    const { data } = await axios.get(`${SUPPLIERS_URI}/${id}/products`, {
+  const getProductsByCategory = async () => {
+    const { data } = await axios.get(`${CATEGORIES_URI}/${id}/products`, {
       headers: { Authorization: `Bearer ${user.token}` },
     });
     setProducts(data);
@@ -25,7 +25,7 @@ export const Supplier = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await getProductsBySupplier();
+        await getProductsByCategory();
         setLoading(false);
       } catch (err) {
         setError(err.message);

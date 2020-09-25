@@ -1,14 +1,17 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Spin, Row, Col } from 'antd';
-import axios from 'axios';
-import UserContext from '../UserContext';
-import { DASHBOARD_URI } from '../api/constants';
+import React, { useState, useEffect, useContext } from "react";
+import { Spin, Row, Col, Divider } from "antd";
+import axios from "axios";
+import UserContext from "../UserContext";
+import { DASHBOARD_URI } from "../api/constants";
+import { LowInStock } from "../components/LowInStock";
+import { TopSuppliers } from "../components/TopSuppliers";
+import { TopCategories } from "../components/TopCategories";
 
 export const Dashboard = () => {
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
-  const [dashboard, setDashboard] = useState('');
-  const [error, setError] = useState('');
+  const [dashboard, setDashboard] = useState("");
+  const [error, setError] = useState("");
 
   const getDashboard = async () => {
     const { data } = await axios.get(DASHBOARD_URI, {
@@ -31,14 +34,23 @@ export const Dashboard = () => {
     fetchDashboard();
   }, []);
 
-  if (!loading) { 
-    console.log(dashboard)
-    return <h1>Dashboard</h1>;
+  if (!loading) {
+    console.log(dashboard);
+    return (
+      <div>
+        <LowInStock products={dashboard.products} />
+        <Divider />
+        <TopSuppliers suppliers={dashboard.suppliers} />
+        <Divider />
+        <TopCategories categories={dashboard.categories} />
+      </div>
+    );
   }
+
   return (
-    <Row justify='center' align='middle' style={{ height: '80vh' }}>
+    <Row justify="center" align="middle" style={{ height: "80vh" }}>
       <Col>
-        <Spin tip='Loading...'></Spin>
+        <Spin tip="Loading..."></Spin>
       </Col>
     </Row>
   );
