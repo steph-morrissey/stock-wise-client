@@ -1,11 +1,14 @@
 import React, { useState, useContext } from 'react';
-import { Form, Input, Button, Row, Col } from 'antd';
+import { Form, Input, Button, Alert, Typography, Row, Col } from 'antd';
 import { SUPPLIERS_URI } from '../api/constants';
 import axios from 'axios';
 import UserContext from '../UserContext';
 
+const { Title } = Typography;
+
 const SupplierForm = () => {
   const { user } = useContext(UserContext);
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
   const onFinish = async (values) => {
@@ -27,22 +30,33 @@ const SupplierForm = () => {
           'Content-Type': 'application/json',
         },
       });
+      setSuccess(true);
     } catch (err) {
       setError(err);
       if (err) throw error;
     }
   };
+
+  const onClose = () => {
+    setSuccess(false);
+  };
+
   return (
     <>
       <Row justify='center' align='middle' style={{ height: '100vh' }}>
-        <Col span={10}>
-          <Form
-            labelCol={{
-              span: 4,
-            }}
-            layout='horizontal'
-            onFinish={onFinish}
-          >
+        <Col xs={20} sm={18} lg={10}>
+          <div style={{ padding: '10px' }}>
+            {success ? (
+              <Alert
+                message='Supplier successfully added'
+                type='success'
+                closeText='OK'
+                onClose={onClose}
+              />
+            ) : null}
+          </div>
+          <Title level={2}>Add a Supplier</Title>
+          <Form layout='horizontal' onFinish={onFinish}>
             <Form.Item label='Supplier Name' name='name'>
               <Input type='text' />
             </Form.Item>
@@ -87,11 +101,18 @@ const SupplierForm = () => {
                 </Form.Item>
               </Input.Group>
             </Form.Item>
-            <Form.Item>
-              <Button type='primary' htmlType='submit' danger>
-                Submit
-              </Button>
-            </Form.Item>
+            <Row>
+              <Col
+                span={24}
+                style={{
+                  textAlign: 'right',
+                }}
+              >
+                <Button type='primary' htmlType='submit' danger>
+                  Submit
+                </Button>
+              </Col>
+            </Row>
           </Form>
         </Col>
       </Row>

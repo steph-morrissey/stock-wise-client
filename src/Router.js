@@ -11,6 +11,12 @@ import { Dashboard } from './components/Dashboard';
 import { Categories } from './pages/Categories';
 import { Suppliers } from './pages/Suppliers';
 import { Products } from './pages/Products';
+import { UpdateCategories } from './pages/UpdateCategories';
+import { UpdateProducts } from './pages/UpdateProducts';
+import { UpdateSuppliers } from './pages/UpdateSuppliers';
+import { DeleteCategories } from './pages/DeleteCategories';
+import { DeleteProducts } from './pages/DeleteProducts';
+import { DeleteSuppliers } from './pages/DeleteSuppliers';
 
 const { Content, Sider } = Layout;
 
@@ -47,6 +53,24 @@ export const Router = () => {
             </Route>
             <Route path='/products' exact>
               {user.token ? <Products /> : <Redirect to='/login' />}
+            </Route>
+            <Route path='/suppliers/delete' exact>
+              {user.token ? <DeleteSuppliers /> : <Redirect to='/login' />}
+            </Route>
+            <Route path='/categories/delete' exact>
+              {user.token ? <DeleteCategories /> : <Redirect to='/login' />}
+            </Route>
+            <Route path='/products/delete' exact>
+              {user.token ? <DeleteProducts /> : <Redirect to='/login' />}
+            </Route>
+            <Route path='/suppliers/update' exact>
+              {user.token ? <UpdateSuppliers /> : <Redirect to='/login' />}
+            </Route>
+            <Route path='/categories/update' exact>
+              {user.token ? <UpdateCategories /> : <Redirect to='/login' />}
+            </Route>
+            <Route path='/products/update' exact>
+              {user.token ? <UpdateProducts /> : <Redirect to='/login' />}
             </Route>
           </Switch>
         </Content>

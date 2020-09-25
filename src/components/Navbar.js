@@ -50,14 +50,28 @@ const Navbar = () => {
             icon={<DeleteOutlined />}
             title='Delete from Inventory'
           >
-            <Menu.Item key='7'>Delete a Supplier</Menu.Item>
-            <Menu.Item key='8'>Delete a Category</Menu.Item>
-            <Menu.Item key='9'>Delete a Product</Menu.Item>
+            <Menu.Item key='7'>
+              <Link to='/suppliers/delete'>Delete a Supplier</Link>
+            </Menu.Item>
+            <Menu.Item key='8'>
+              <Link to='/categories/delete'>Delete a Category</Link>
+            </Menu.Item>
+            <Menu.Item key='9'>
+              <Link to='/products/delete'>Delete a Product</Link>
+            </Menu.Item>
           </SubMenu>
           <SubMenu key='sub3' icon={<EditOutlined />} title='Update Inventory'>
-            <Menu.Item key='10'>Update a Supplier</Menu.Item>
-            <Menu.Item key='11'>Update a Category</Menu.Item>
-            <Menu.Item key='12'>Update a Product</Menu.Item>
+            <Menu.Item key='10'>
+              <Link to='/suppliers/update'>Update a Supplier</Link>
+            </Menu.Item>
+            <Menu.Item key='11'>
+              {' '}
+              <Link to='/categories/update'>Update a Category</Link>
+            </Menu.Item>
+            <Menu.Item key='12'>
+              {' '}
+              <Link to='/products/update'>Update a Product</Link>
+            </Menu.Item>
           </SubMenu>
         </Menu>
       </div>
