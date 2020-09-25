@@ -1,18 +1,18 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { List, Spin, Alert, Typography, Row, Col } from 'antd';
-import axios from 'axios';
-import { SUPPLIERS_URI } from '../api/constants';
+import React, { useEffect, useState, useContext } from "react";
+import { List, Spin, Alert, Typography, Row, Col } from "antd";
+import axios from "axios";
+import { SUPPLIERS_URI } from "../api/constants";
 
-import UserContext from '../UserContext';
+import UserContext from "../UserContext";
 
 const { Title } = Typography;
 
 const DeleteSupplier = () => {
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
-  const [suppliers, setSuppliers] = useState('');
+  const [suppliers, setSuppliers] = useState("");
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const getSuppliers = async () => {
     const { data } = await axios.get(SUPPLIERS_URI, {
@@ -36,7 +36,7 @@ const DeleteSupplier = () => {
 
   const handleDelete = async (event) => {
     event.preventDefault();
-    const id = event.target.getAttribute('id');
+    const id = event.target.getAttribute("id");
     try {
       const { data } = await axios.delete(`${SUPPLIERS_URI}/${id}`, {
         headers: { Authorization: `Bearer ${user.token}` },
@@ -56,27 +56,27 @@ const DeleteSupplier = () => {
   if (!loading) {
     return (
       <>
-        <Row justify='center' align='middle'>
+        <Row justify="center" align="middle">
           <Col span={20}>
             <>
               {success ? (
                 <Alert
-                  message='Supplier successfully deleted'
-                  type='success'
-                  closeText='OK'
+                  message="Supplier successfully deleted"
+                  type="success"
+                  closeText="OK"
                   onClose={onClose}
                 />
               ) : null}
-              <Title level={2}>Delete a Product</Title>
+              <Title level={2}>Delete a Supplier</Title>
               <List
-                size='large'
+                size="large"
                 bordered
                 dataSource={suppliers}
-                itemLayout='horizontal'
+                itemLayout="horizontal"
                 renderItem={(item) => (
                   <List.Item
                     actions={[
-                      <a key='item._id' id={item._id} onClick={handleDelete}>
+                      <a key="item._id" id={item._id} onClick={handleDelete}>
                         delete
                       </a>,
                     ]}
@@ -92,9 +92,9 @@ const DeleteSupplier = () => {
     );
   }
   return (
-    <Row justify='center' align='middle' style={{ height: '80vh' }}>
+    <Row justify="center" align="middle" style={{ height: "80vh" }}>
       <Col>
-        <Spin tip='Loading...'></Spin>
+        <Spin tip="Loading..."></Spin>
       </Col>
     </Row>
   );

@@ -13,7 +13,7 @@ const CategoryForm = () => {
 
   const onFinish = async (values) => {
     try {
-      const { data: category } = await axios.post(CATEGORIES_URI, values, {
+      await axios.post(CATEGORIES_URI, values, {
         headers: {
           Authorization: `Bearer ${user.token}`,
           'Content-Type': 'application/json',
