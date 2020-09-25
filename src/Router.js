@@ -7,7 +7,7 @@ import UserContext from './UserContext';
 import Navbar from './components/Navbar';
 import { Register } from './components/Register';
 import { Login } from './components/Login';
-import { Dashboard } from './components/Dashboard';
+import { Dashboard } from './pages/Dashboard';
 import { Inventory } from './pages/Inventory';
 import { Categories } from './pages/Categories';
 import { Suppliers } from './pages/Suppliers';
@@ -18,6 +18,8 @@ import { UpdateSuppliers } from './pages/UpdateSuppliers';
 import { DeleteCategories } from './pages/DeleteCategories';
 import { DeleteProducts } from './pages/DeleteProducts';
 import { DeleteSuppliers } from './pages/DeleteSuppliers';
+import { AllSuppliers } from './pages/AllSuppliers';
+import { Supplier } from './pages/Supplier';
 
 const { Content, Sider } = Layout;
 
@@ -75,6 +77,12 @@ export const Router = () => {
             </Route>
             <Route path='/products/update' exact>
               {user.token ? <UpdateProducts /> : <Redirect to='/login' />}
+            </Route>
+            <Route path='/suppliers/view' exact>
+              {user.token ? <AllSuppliers /> : <Redirect to='/login' />}
+            </Route>
+            <Route path='/suppliers/view/:id' exact>
+              {user.token ? <Supplier /> : <Redirect to='/login' />}
             </Route>
           </Switch>
         </Content>

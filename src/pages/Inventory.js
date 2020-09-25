@@ -84,11 +84,13 @@ export const Inventory = () => {
             }}
             id={item._id}
             extra={
-              <Button>
-                <a key={item._id} id={item._id} onClick={showModal}>
-                  Low In Stock
-                </a>
-              </Button>
+              item.status !== 'Low In Stock' ? (
+                <Button>
+                  <a key={item._id} id={item._id} onClick={showModal}>
+                    Low In Stock
+                  </a>
+                </Button>
+              ) : null
             }
           >
             <p>Status: {item.status}</p>

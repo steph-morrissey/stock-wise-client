@@ -32,10 +32,6 @@ const CategoryForm = () => {
 
   return (
     <>
-<<<<<<< HEAD
-      <Row justify='center' align='middle' style={{ height: '100vh' }}>
-        <Col span={10}>
-=======
       <Row justify='center' align='middle' style={{ height: '80vh' }}>
         <Col xs={20} sm={18} lg={10}>
           <div style={{ padding: '10px' }}>
@@ -49,7 +45,6 @@ const CategoryForm = () => {
             ) : null}
           </div>
           <Title level={2}>Add a Category</Title>
->>>>>>> master
           <Form layout='horizontal' onFinish={onFinish}>
             <Form.Item name='name' label='Category Name'>
               <Input type='text' />

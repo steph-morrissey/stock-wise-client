@@ -25,7 +25,10 @@ const Navbar = () => {
           <Menu.Item
             key='1'
             icon={<LoginOutlined />}
-            onClick={() => setUser({})}
+            onClick={() => {
+              localStorage.removeItem('user');
+              setUser({});
+            }}
           >
             Logout
           </Menu.Item>
