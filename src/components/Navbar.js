@@ -30,8 +30,12 @@ const Navbar = () => {
             Logout
           </Menu.Item>
           <Menu.Divider />
-          <Menu.Item key='3' icon={<ScheduleOutlined />}>
+          <Menu.Item key='2' icon={<ScheduleOutlined />}>
             <Link to='/dashboard'>Dashboard</Link>
+          </Menu.Item>
+          <Menu.Divider />
+          <Menu.Item key='3' icon={<ScheduleOutlined />}>
+            <Link to='/inventory'>View Inventory</Link>
           </Menu.Item>
           <Menu.Divider />
           <SubMenu key='sub1' icon={<PlusOutlined />} title='Add to Inventory'>

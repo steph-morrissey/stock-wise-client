@@ -8,6 +8,7 @@ import Navbar from './components/Navbar';
 import { Register } from './components/Register';
 import { Login } from './components/Login';
 import { Dashboard } from './components/Dashboard';
+import { Inventory } from './pages/Inventory';
 import { Categories } from './pages/Categories';
 import { Suppliers } from './pages/Suppliers';
 import { Products } from './pages/Products';
@@ -38,6 +39,9 @@ export const Router = () => {
             </Route>
             <Route path='/dashboard' exact>
               {user.token ? <Dashboard /> : <Redirect to='/login' />}
+            </Route>
+            <Route path='/inventory' exact>
+              {user.token ? <Inventory /> : <Redirect to='/login' />}
             </Route>
             <Route path='/suppliers' exact>
               {user.token ? <Suppliers /> : <Redirect to='/login' />}

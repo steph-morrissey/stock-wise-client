@@ -10,7 +10,7 @@ const CategoryForm = () => {
 
   const onFinish = async (values) => {
     try {
-      const { data: category } = await axios.post(CATEGORIES_URI, values, {
+      await axios.post(CATEGORIES_URI, values, {
         headers: {
           Authorization: `Bearer ${user.token}`,
           'Content-Type': 'application/json',
@@ -26,13 +26,7 @@ const CategoryForm = () => {
     <>
       <Row justify='center' align='middle' style={{ height: '100vh' }}>
         <Col span={10}>
-          <Form
-            labelCol={{
-              span: 4,
-            }}
-            layout='horizontal'
-            onFinish={onFinish}
-          >
+          <Form layout='horizontal' onFinish={onFinish}>
             <Form.Item name='name' label='Category Name'>
               <Input type='text' />
             </Form.Item>
