@@ -1,16 +1,15 @@
-import React, { useEffect, useState, useContext } from "react";
-import { List, Spin, Alert, Typography, Row, Col } from "antd";
-import axios from "axios";
-import { CATEGORIES_URI } from "../api/constants";
+import React, { useEffect, useState, useContext } from 'react';
+import { List, Spin, Alert, Row, Col } from 'antd';
+import axios from 'axios';
+import { CATEGORIES_URI } from '../api/constants';
 
-import UserContext from "../UserContext";
-const { Title } = Typography;
+import UserContext from '../UserContext';
 const DeleteCategory = () => {
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
-  const [categories, setCategories] = useState("");
+  const [categories, setCategories] = useState('');
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const getCategories = async () => {
     const { data } = await axios.get(CATEGORIES_URI, {
@@ -34,9 +33,9 @@ const DeleteCategory = () => {
 
   const handleDelete = async (event) => {
     event.preventDefault();
-    const id = event.target.getAttribute("id");
+    const id = event.target.getAttribute('id');
     try {
-      const { data } = await axios.delete(`${CATEGORIES_URI}/${id}`, {
+      await axios.delete(`${CATEGORIES_URI}/${id}`, {
         headers: { Authorization: `Bearer ${user.token}` },
       });
       await getCategories();
@@ -54,26 +53,26 @@ const DeleteCategory = () => {
   if (!loading) {
     return (
       <>
-        <Row justify="center" align="middle">
+        <Row justify='center' align='middle'>
           <Col span={20}>
             <>
               {success ? (
                 <Alert
-                  message="Category successfully deleted"
-                  type="success"
-                  closeText="OK"
+                  message='Category successfully deleted'
+                  type='success'
+                  closeText='OK'
                   onClose={onClose}
                 />
               ) : null}
               <List
-                size="large"
+                size='large'
                 bordered
                 dataSource={categories}
-                itemLayout="horizontal"
+                itemLayout='horizontal'
                 renderItem={(item) => (
                   <List.Item
                     actions={[
-                      <a key="item._id" id={item._id} onClick={handleDelete}>
+                      <a key='item._id' id={item._id} onClick={handleDelete}>
                         delete
                       </a>,
                     ]}
@@ -89,9 +88,9 @@ const DeleteCategory = () => {
     );
   }
   return (
-    <Row justify="center" align="middle" style={{ height: "80vh" }}>
+    <Row justify='center' align='middle' style={{ height: '80vh' }}>
       <Col>
-        <Spin tip="Loading..."></Spin>
+        <Spin tip='Loading...'></Spin>
       </Col>
     </Row>
   );

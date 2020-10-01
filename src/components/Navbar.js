@@ -6,6 +6,7 @@ import {
   LoginOutlined,
   AppstoreOutlined,
   ScheduleOutlined,
+  StrikethroughOutlined,
 } from '@ant-design/icons';
 
 import UserContext from '../UserContext';
@@ -18,8 +19,14 @@ const Navbar = () => {
   if (user.token) {
     return (
       <div>
-        <PageHeader className='site-page-header' title='Stock Wise' />
-        <Menu icon={<LoginOutlined />}>
+        <PageHeader className='site-page-header'>
+          <h3 style={{ color: 'white' }}>Stock Wise</h3>
+        </PageHeader>
+        <Menu
+          icon={<LoginOutlined />}
+          style={{ backgroundColor: '#150B41' }}
+          theme='dark'
+        >
           <Menu.Item
             key='logout'
             icon={<LoginOutlined />}
@@ -87,8 +94,10 @@ const Navbar = () => {
 
   return (
     <div className='scrollable-container'>
-      <PageHeader className='site-page-header' title='Stock Wise' />
-      <Menu mode='vertical' style={{ backgroundColor: '#F6F9FE' }}>
+      <PageHeader className='site-page-header'>
+        <h3 style={{ color: 'white' }}>Stock Wise</h3>
+      </PageHeader>
+      <Menu mode='vertical' theme='dark' style={{ backgroundColor: '#150B41' }}>
         <Menu.Item key='1' icon={<LoginOutlined />}>
           <Link to='/login'>Login</Link>
         </Menu.Item>

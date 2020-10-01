@@ -24,7 +24,7 @@ const SupplierForm = () => {
       },
     };
     try {
-      const { data } = await axios.post(SUPPLIERS_URI, body, {
+      await axios.post(SUPPLIERS_URI, body, {
         headers: {
           Authorization: `Bearer ${user.token}`,
           'Content-Type': 'application/json',
