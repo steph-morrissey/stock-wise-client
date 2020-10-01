@@ -13,7 +13,7 @@ export const Login = () => {
   const onFinish = async (values) => {
     try {
       const { data } = await axios.post(LOGIN_URL, values);
-      localStorage.setItem("user", JSON.stringify(data));
+      localStorage.setItem('user', JSON.stringify(data));
       setUser(data);
     } catch (error) {
       setError(error.message);
@@ -59,7 +59,7 @@ export const Login = () => {
 
               <Form.Item>
                 <Button
-                  type='danger'
+                  style={{ backgroundColor: '#150B41', color: '#FFF' }}
                   className='login-form-button'
                   htmlType='submit'
                 >

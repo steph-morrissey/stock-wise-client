@@ -101,7 +101,7 @@ export const Register = () => {
 
               <Form.Item>
                 <Button
-                  type='danger'
+                  style={{ backgroundColor: '#150B41', color: '#FFF' }}
                   className='register-form-button'
                   htmlType='submit'
                 >

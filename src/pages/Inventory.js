@@ -1,9 +1,9 @@
-import React, { useState, useContext, useEffect } from "react";
-import axios from "axios";
-import UserContext from "../UserContext";
-import { Modal, Row, Col, Spin, PageHeader, Select } from "antd";
-import { PRODUCTS_URI } from "../api/constants";
-import { ProductCards } from "../components/ProductCards";
+import React, { useState, useContext, useEffect } from 'react';
+import axios from 'axios';
+import UserContext from '../UserContext';
+import { Modal, Row, Col, Spin, PageHeader, Select } from 'antd';
+import { PRODUCTS_URI } from '../api/constants';
+import { ProductCards } from '../components/ProductCards';
 
 const { Option } = Select;
 
@@ -13,11 +13,11 @@ export const Inventory = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [error, setError] = useState("");
-  const [reportedProductId, setReportedProductId] = useState("");
+  const [error, setError] = useState('');
+  const [reportedProductId, setReportedProductId] = useState('');
   const [visible, setVisible] = useState(false);
   const [modalText, setModalText] = useState(
-    "Report this product as Low In Stock?"
+    'Report this product as Low In Stock?',
   );
   const [confirmLoading, setConfirmLoading] = useState(false);
 
@@ -45,13 +45,13 @@ export const Inventory = () => {
 
   const showModal = (event) => {
     event.preventDefault();
-    const id = event.target.getAttribute("id");
+    const id = event.target.getAttribute('id');
     setReportedProductId(id);
     setVisible(true);
   };
 
   const handleOk = async () => {
-    setModalText("Product has been reported as Low In Stock.");
+    setModalText('Product has been reported as Low In Stock.');
     setConfirmLoading(true);
     setTimeout(() => {
       setVisible(false);
@@ -61,10 +61,10 @@ export const Inventory = () => {
     const id = reportedProductId;
     await axios.put(
       `${PRODUCTS_URI}/${id}`,
-      { status: "Low In Stock" },
+      { status: 'Low In Stock' },
       {
         headers: { Authorization: `Bearer ${user.token}` },
-      }
+      },
     );
 
     await getInventory();
@@ -77,7 +77,7 @@ export const Inventory = () => {
   const handleChange = (categoryId) => {
     if (categoryId) {
       setFilteredProducts(
-        products.filter((each) => each.categoryId === categoryId)
+        products.filter((each) => each.categoryId === categoryId),
       );
     } else {
       setFilteredProducts(products);
@@ -86,18 +86,21 @@ export const Inventory = () => {
 
   if (!loading) {
     return (
-      <div className="site-card-wrapper">
-        <PageHeader title="View Inventory" />
+      <div className='site-card-wrapper'>
+        <Row align='middle' justify='center'>
+          <PageHeader title='View Inventory' />
+        </Row>
         <Row
-          style={{ display: "flex", flexWrap: "wrap" }}
-          justify="center"
-          align="middle"
+          style={{ display: 'flex', flexWrap: 'wrap' }}
+          justify='center'
+          align='middle'
+          style={{ margin: '10px' }}
         >
           <Select
-            placeholder="Select a option and change input text above"
+            placeholder='Select a option and change input text above'
             onChange={handleChange}
             allowClear
-            style={{ width: "50%" }}
+            style={{ width: '50%' }}
           >
             {categories.map((category) => (
               <Option value={category._id}>{category.name}</Option>
@@ -105,14 +108,14 @@ export const Inventory = () => {
           </Select>
         </Row>
         <Row
-          style={{ display: "flex", flexWrap: "wrap" }}
-          justify="center"
-          align="middle"
+          style={{ display: 'flex', flexWrap: 'wrap' }}
+          justify='center'
+          align='middle'
         >
           <Modal
-            title="Report as Low In Stock"
+            title='Report as Low In Stock'
             visible={visible}
-            okText="Yes"
+            okText='Yes'
             onOk={handleOk}
             confirmLoading={confirmLoading}
             onCancel={handleCancel}
@@ -125,9 +128,9 @@ export const Inventory = () => {
     );
   }
   return (
-    <Row justify="center" align="middle" style={{ height: "80vh" }}>
+    <Row justify='center' align='middle' style={{ height: '80vh' }}>
       <Col>
-        <Spin tip="Loading..."></Spin>
+        <Spin tip='Loading...'></Spin>
       </Col>
     </Row>
   );

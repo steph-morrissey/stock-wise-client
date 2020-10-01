@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Spin, Row, Col } from 'antd';
 import axios from 'axios';
-import UserContext from '../UserContext';
-import { SUPPLIERS_URI } from '../api/constants';
+import UserContext from '../../UserContext';
+import Loading from '../../components/Loading';
+import { SUPPLIERS_URI } from '../../api/constants';
 
 export const AllSuppliers = () => {
   const { user } = useContext(UserContext);
@@ -29,15 +29,10 @@ export const AllSuppliers = () => {
     };
     fetchSuppliers();
   }, []);
-  if (!loading) {
-    console.log(suppliers);
-    return <div>All Suppliers</div>;
+  if (loading) {
+    return <Loading />;
   }
-  return (
-    <Row justify='center' align='middle' style={{ height: '80vh' }}>
-      <Col>
-        <Spin tip='Loading...'></Spin>
-      </Col>
-    </Row>
-  );
+
+  console.log(suppliers);
+  return <div>All Suppliers</div>;
 };

@@ -1,12 +1,15 @@
 import React, { useState, useContext } from 'react';
-import { Form, Input, Button, Alert, Typography, Row, Col } from 'antd';
-import { CATEGORIES_URI } from '../api/constants';
 import axios from 'axios';
-import UserContext from '../UserContext';
+import { Form, Input, Button, Typography, Row, Col } from 'antd';
+import { CATEGORIES_URI } from '../../api/constants';
+
+import UserContext from '../../UserContext';
+
+import AlertSuccess from '../../components/AlertSuccess';
 
 const { Title } = Typography;
 
-const CategoryForm = () => {
+export const AddCategories = () => {
   const { user } = useContext(UserContext);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
@@ -35,14 +38,11 @@ const CategoryForm = () => {
       <Row justify='center' align='middle' style={{ height: '80vh' }}>
         <Col xs={20} sm={18} lg={10}>
           <div style={{ padding: '10px' }}>
-            {success ? (
-              <Alert
-                message='Category successfully added'
-                type='success'
-                closeText='OK'
-                onClose={onClose}
-              />
-            ) : null}
+            <AlertSuccess
+              alertMessage='Category successfully added.'
+              success={success}
+              onClose={onClose}
+            />
           </div>
           <Title level={2}>Add a Category</Title>
           <Form layout='horizontal' onFinish={onFinish}>
@@ -56,7 +56,11 @@ const CategoryForm = () => {
                   textAlign: 'right',
                 }}
               >
-                <Button type='primary' htmlType='submit' danger>
+                <Button
+                  type='primary'
+                  htmlType='submit'
+                  style={{ backgroundColor: '#150B41', color: '#FFF' }}
+                >
                   Submit
                 </Button>
               </Col>
@@ -67,5 +71,3 @@ const CategoryForm = () => {
     </>
   );
 };
-
-export default CategoryForm;
