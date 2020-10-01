@@ -21,9 +21,9 @@ import { AllSuppliers } from './pages/suppliers/AllSuppliers';
 import { UpdateSuppliers } from './pages/suppliers/UpdateSuppliers';
 import { DeleteSuppliers } from './pages/suppliers/DeleteSuppliers';
 // Product pages
-import { AddProducts } from './pages/products/AddProducts';
-import { UpdateProducts } from './pages/products/UpdateProducts';
-import { DeleteProducts } from './pages/products/DeleteProducts';
+import { AddProducts } from './pages/Products/AddProducts';
+import { UpdateProducts } from './pages/Products/UpdateProducts';
+import { DeleteProducts } from './pages/Products/DeleteProducts';
 
 const { Content, Sider } = Layout;
 
