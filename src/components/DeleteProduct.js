@@ -54,7 +54,7 @@ const DeleteProducts = () => {
   };
 
   const RenderProductCards = ({ items }) => {
-    return items.map((item) => {
+    return items.products.map((item) => {
       return (
         <div className='site-card-border-less-wrapper'>
           <Card

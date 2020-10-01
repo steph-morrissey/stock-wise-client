@@ -1,6 +1,16 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import axios from 'axios';
-import { Form, Input, Select, Button, Alert, Typography, Row, Col } from 'antd';
+import {
+  Form,
+  Input,
+  Select,
+  Button,
+  Alert,
+  Typography,
+  Spin,
+  Row,
+  Col,
+} from 'antd';
 import { CATEGORIES_URI, SUPPLIERS_URI, PRODUCTS_URI } from '../api/constants';
 
 import UserContext from '../UserContext';
@@ -143,7 +153,13 @@ const ProductForm = () => {
       </>
     );
   }
-  return <h1>Loading...</h1>;
+  return (
+    <Row justify='center' align='middle' style={{ height: '80vh' }}>
+      <Col>
+        <Spin tip='Loading...'></Spin>
+      </Col>
+    </Row>
+  );
 };
 
 export default ProductForm;

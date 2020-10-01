@@ -74,7 +74,8 @@ const UpdateProducts = () => {
   };
 
   const RenderProductCards = ({ items }) => {
-    return items.map((item) => {
+    console.log(items);
+    return items.products.map((item) => {
       return (
         <div className='site-card-border-less-wrapper'>
           <Card
@@ -97,7 +98,7 @@ const UpdateProducts = () => {
             </p>
             <p>
               <Text strong>Selling Price: </Text> {item.sellingPrice}
-            </p>{' '}
+            </p>
           </Card>
         </div>
       );
