@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import UserContext from '../UserContext';
-import Loading from '../components/Loading';
-import { SUPPLIERS_URI } from '../api/constants';
+import UserContext from '../../UserContext';
+import Loading from '../../components/Loading';
+import { SUPPLIERS_URI } from '../../api/constants';
 
 export const AllSuppliers = () => {
   const { user } = useContext(UserContext);

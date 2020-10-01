@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import { Card, Typography, Row, Col } from 'antd';
+import { Typography, Row, Col } from 'antd';
 import { PRODUCTS_URI } from '../../api/constants';
 import ProductFrom from '../../components/ProductForm';
 import UserContext from '../../UserContext';
@@ -9,7 +9,7 @@ import Loading from '../../components/Loading';
 import AlertSuccess from '../../components/AlertSuccess';
 import RenderProductCards from '../../components/RenderProductCards';
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 export const UpdateProducts = () => {
   const { user } = useContext(UserContext);
@@ -74,33 +74,43 @@ export const UpdateProducts = () => {
 
   if (updateProduct) {
     return (
-      <Row justify='center' align='middle'>
-        <Col xs={20} sm={18} lg={10}>
+      <div>
+        <Row>
           <Title level={2}>Edit Product</Title>
-          <ProductFrom
-            formType='updateProduct'
-            newProduct={newProduct}
-            onFinish={onFinish}
-          />
-        </Col>
-      </Row>
+        </Row>
+        <Row justify='center' align='middle'>
+          <Col xs={20} sm={18} lg={10}>
+            <ProductFrom
+              formType='updateProduct'
+              newProduct={newProduct}
+              onFinish={onFinish}
+            />
+          </Col>
+        </Row>
+      </div>
     );
   }
 
   return (
     <>
       <Row justify='center' align='middle'>
-        <Col xs={20} sm={18} lg={10}>
-          <>
-            <AlertSuccess
-              alertMessage='Product successfully updated.'
-              success={success}
-              onClose={onClose}
-            />
-            <Title level={2}>Update a Product</Title>
-            <RenderProductCards items={products} handleEvent={handleUpdate} />
-          </>
-        </Col>
+        <Title level={2}>Update a Product</Title>
+        <AlertSuccess
+          alertMessage='Product successfully updated.'
+          success={success}
+          onClose={onClose}
+        />
+      </Row>
+      <Row
+        style={{ display: 'flex', flexWrap: 'wrap' }}
+        justify='center'
+        align='middle'
+      >
+        <RenderProductCards
+          items={products}
+          handleEvent={handleUpdate}
+          buttonText='edit'
+        />
       </Row>
     </>
   );

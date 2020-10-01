@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { Row, Col } from 'antd';
+import { Row, Col, Typography } from 'antd';
 import UserContext from '../../UserContext';
 import ProductForm from '../../components/ProductForm';
 import AlertSuccess from '../../components/AlertSuccess';
@@ -11,7 +11,9 @@ import {
   PRODUCTS_URI,
 } from '../../api/constants';
 
-export const Products = () => {
+const { Title } = Typography;
+
+export const AddProducts = () => {
   const { user } = useContext(UserContext);
   const [categories, setCategories] = useState('');
   const [suppliers, setSuppliers] = useState('');
@@ -69,14 +71,14 @@ export const Products = () => {
 
   return (
     <>
-      <Row justify='center' align='middle' style={{ height: '100vh' }}>
+      <Row justify='center' align='middle' style={{ height: '80vh' }}>
         <Col xs={20} sm={18} lg={10}>
           <AlertSuccess
             alertMessage='Product successfully added.'
             success={success}
             onClose={onClose}
           />
-          <h1>Add a Product</h1>
+          <Title level={2}>Add a Product</Title>
           <ProductForm
             formType='addProduct'
             categories={categories}

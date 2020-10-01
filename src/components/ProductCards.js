@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Button, Alert } from 'antd';
+import { Card, Alert } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 export const ProductCards = ({ items = [], showModal }) => {

@@ -5,23 +5,25 @@ import { Layout } from 'antd';
 import UserContext from './UserContext';
 
 import Navbar from './components/Navbar';
-import { Login } from './components/Login';
-import { Register } from './components/Register';
+import { Login } from './pages/Login';
+import { Register } from './pages/Register';
 import { Dashboard } from './pages/Dashboard';
 import { Inventory } from './pages/Inventory';
-import { Categories } from './pages/AddCategory';
-import { Category } from './pages/Category';
-import { UpdateCategories } from './pages/UpdateCategories';
-import { DeleteCategories } from './pages/DeleteCategories';
-import { Supplier } from './pages/Supplier';
-import { Suppliers } from './pages/AddSupplier';
-import { AllSuppliers } from './pages/AllSuppliers';
-import { UpdateSuppliers } from './pages/UpdateSuppliers';
-import { DeleteSuppliers } from './pages/DeleteSuppliers';
+// Categories pages
+import { AddCategories } from './pages/categories/AddCategories';
+import { Category } from './pages/categories/Category';
+import { UpdateCategories } from './pages/categories/UpdateCategories';
+import { DeleteCategories } from './pages/categories/DeleteCategories';
+// Suppliers pages
+import { Supplier } from './pages/suppliers/Supplier';
+import { AddSuppliers } from './pages/suppliers/AddSuppliers';
+import { AllSuppliers } from './pages/suppliers/AllSuppliers';
+import { UpdateSuppliers } from './pages/suppliers/UpdateSuppliers';
+import { DeleteSuppliers } from './pages/suppliers/DeleteSuppliers';
 // Product pages
-import { Products } from './pages/Products/AddProducts';
-import { UpdateProducts } from './pages/Products/UpdateProducts';
-import { DeleteProducts } from './pages/Products/DeleteProducts';
+import { AddProducts } from './pages/products/AddProducts';
+import { UpdateProducts } from './pages/products/UpdateProducts';
+import { DeleteProducts } from './pages/products/DeleteProducts';
 
 const { Content, Sider } = Layout;
 
@@ -58,7 +60,7 @@ export const Router = () => {
                 {user.token ? <Inventory /> : <Redirect to='/login' />}
               </Route>
               <Route path='/suppliers' exact>
-                {user.token ? <Suppliers /> : <Redirect to='/login' />}
+                {user.token ? <AddSuppliers /> : <Redirect to='/login' />}
               </Route>
               <Route path='/suppliers/update' exact>
                 {user.token ? <UpdateSuppliers /> : <Redirect to='/login' />}
@@ -73,7 +75,7 @@ export const Router = () => {
                 {user.token ? <Supplier /> : <Redirect to='/login' />}
               </Route>
               <Route path='/categories' exact>
-                {user.token ? <Categories /> : <Redirect to='/login' />}
+                {user.token ? <AddCategories /> : <Redirect to='/login' />}
               </Route>
               <Route path='/categories/update' exact>
                 {user.token ? <UpdateCategories /> : <Redirect to='/login' />}
@@ -85,7 +87,7 @@ export const Router = () => {
                 {user.token ? <Category /> : <Redirect to='/login' />}
               </Route>
               <Route path='/products' exact>
-                {user.token ? <Products /> : <Redirect to='/login' />}
+                {user.token ? <AddProducts /> : <Redirect to='/login' />}
               </Route>
               <Route path='/products/update' exact>
                 {user.token ? <UpdateProducts /> : <Redirect to='/login' />}

@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useParams, useHistory } from "react-router-dom";
-import { Spin, Row, Col, PageHeader } from "antd";
-import axios from "axios";
-import UserContext from "../UserContext";
-import { CATEGORIES_URI } from "../api/constants";
-import { ProductCards } from "../components/ProductCards";
+import React, { useState, useEffect, useContext } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
+import { Spin, Row, Col, PageHeader } from 'antd';
+import axios from 'axios';
+import UserContext from '../../UserContext';
+import { CATEGORIES_URI } from '../../api/constants';
+import { ProductCards } from '../../components/ProductCards';
 
 export const Category = () => {
   const history = useHistory();
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
-  const [products, setProducts] = useState("");
-  const [error, setError] = useState("");
+  const [products, setProducts] = useState('');
+  const [error, setError] = useState('');
 
   const { id } = useParams();
 
@@ -38,11 +38,11 @@ export const Category = () => {
   if (!loading) {
     return (
       <div>
-        <PageHeader title="Products" onBack={() => history.goBack()} />
+        <PageHeader title='Products' onBack={() => history.goBack()} />
         <Row
-          style={{ display: "flex", flexWrap: "wrap" }}
-          justify="center"
-          align="middle"
+          style={{ display: 'flex', flexWrap: 'wrap' }}
+          justify='center'
+          align='middle'
         >
           <ProductCards items={products} />
         </Row>
@@ -50,9 +50,9 @@ export const Category = () => {
     );
   }
   return (
-    <Row justify="center" align="middle" style={{ height: "80vh" }}>
+    <Row justify='center' align='middle' style={{ height: '80vh' }}>
       <Col>
-        <Spin tip="Loading..."></Spin>
+        <Spin tip='Loading...'></Spin>
       </Col>
     </Row>
   );

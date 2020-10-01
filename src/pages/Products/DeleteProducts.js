@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Row, Typography, Col } from 'antd';
+import { Row, Typography } from 'antd';
 import axios from 'axios';
 import { PRODUCTS_URI } from '../../api/constants';
 import UserContext from '../../UserContext';
@@ -63,17 +63,23 @@ export const DeleteProducts = () => {
   return (
     <>
       <Row justify='center' align='middle'>
-        <Col xs={20} sm={18} lg={10}>
-          <>
-            <AlertSuccess
-              alertMessage='Product successfully deleted.'
-              success={success}
-              onClose={onClose}
-            />
-            <Title level={2}>Delete a Product</Title>
-            <RenderProductCards items={products} handleEvent={handleDelete} />
-          </>
-        </Col>
+        <AlertSuccess
+          alertMessage='Product successfully deleted.'
+          success={success}
+          onClose={onClose}
+        />
+        <Title level={2}>Delete a Product</Title>
+      </Row>
+      <Row
+        style={{ display: 'flex', flexWrap: 'wrap' }}
+        justify='center'
+        align='middle'
+      >
+        <RenderProductCards
+          items={products}
+          handleEvent={handleDelete}
+          buttonText='delete'
+        />
       </Row>
     </>
   );

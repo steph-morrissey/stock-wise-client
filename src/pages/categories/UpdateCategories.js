@@ -1,23 +1,15 @@
 import React, { useEffect, useState, useContext } from 'react';
-import {
-  List,
-  Spin,
-  Form,
-  Input,
-  Button,
-  Alert,
-  Typography,
-  Row,
-  Col,
-} from 'antd';
 import axios from 'axios';
-import { CATEGORIES_URI } from '../api/constants';
+import { List, Form, Input, Button, Alert, Typography, Row, Col } from 'antd';
+import { CATEGORIES_URI } from '../../api/constants';
 
-import UserContext from '../UserContext';
+import UserContext from '../../UserContext';
+
+import Loading from '../../components/Loading';
 
 const { Title } = Typography;
 
-const UpdateCategories = () => {
+export const UpdateCategories = () => {
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
   const [updateCategory, setUpdateCategory] = useState(false);
@@ -53,7 +45,7 @@ const UpdateCategories = () => {
       headers: { Authorization: `Bearer ${user.token}` },
     });
     setNewCategory(data);
-    setLoading(true);
+    setLoading(false);
     setUpdateCategory(true);
   };
 
@@ -77,49 +69,14 @@ const UpdateCategories = () => {
     setSuccess(false);
   };
 
-  if (!loading && !updateCategory) {
-    return (
-      <>
-        <Row justify='center' align='middle'>
-          <Col span={20}>
-            <>
-              {success ? (
-                <Alert
-                  message='Category successfully updated'
-                  type='success'
-                  closeText='OK'
-                  onClose={onClose}
-                />
-              ) : null}
-              <Title level={2}>Update a Category</Title>
-              <List
-                size='large'
-                bordered
-                dataSource={categories}
-                itemLayout='horizontal'
-                renderItem={(item) => (
-                  <List.Item
-                    actions={[
-                      <a key='item._id' id={item._id} onClick={handleUpdate}>
-                        edit
-                      </a>,
-                    ]}
-                  >
-                    {item.name}
-                  </List.Item>
-                )}
-              />
-            </>
-          </Col>
-        </Row>
-      </>
-    );
+  if (loading) {
+    return <Loading />;
   }
 
-  if (loading && updateCategory) {
+  if (updateCategory) {
     return (
-      <Row justify='center' align='middle'>
-        <Col span={20}>
+      <Row justify='center' align='middle' style={{ height: '80vh' }}>
+        <Col xs={20} sm={18} lg={10}>
           <Title level={2}>Edit Category</Title>
           <Form name='updateCategory' onFinish={onFinish}>
             <Form.Item label='Category Name:' name='categoryName'>
@@ -131,13 +88,46 @@ const UpdateCategories = () => {
       </Row>
     );
   }
+
   return (
-    <Row justify='center' align='middle' style={{ height: '80vh' }}>
-      <Col>
-        <Spin tip='Loading...'></Spin>
-      </Col>
-    </Row>
+    <>
+      <Row justify='center' align='middle' style={{ height: '80vh' }}>
+        <Col xs={20} sm={18} lg={10}>
+          <>
+            {success ? (
+              <Alert
+                message='Category successfully updated'
+                type='success'
+                closeText='OK'
+                onClose={onClose}
+              />
+            ) : null}
+            <Title level={2}>Update a Category</Title>
+            <List
+              size='large'
+              bordered
+              dataSource={categories}
+              itemLayout='horizontal'
+              renderItem={(item) => (
+                <List.Item
+                  actions={[
+                    <button
+                      key='item._id'
+                      id={item._id}
+                      style={{ backgroundColor: '#150B41', color: '#FFF' }}
+                      onClick={handleUpdate}
+                    >
+                      edit
+                    </button>,
+                  ]}
+                >
+                  {item.name}
+                </List.Item>
+              )}
+            />
+          </>
+        </Col>
+      </Row>
+    </>
   );
 };
-
-export default UpdateCategories;

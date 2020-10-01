@@ -1,12 +1,15 @@
 import React, { useState, useContext } from 'react';
-import { Form, Input, Button, Alert, Typography, Row, Col } from 'antd';
-import { SUPPLIERS_URI } from '../api/constants';
+import { Form, Input, Button, Typography, Row, Col } from 'antd';
+import { SUPPLIERS_URI } from '../../api/constants';
 import axios from 'axios';
-import UserContext from '../UserContext';
+
+import AlertSuccess from '../../components/AlertSuccess';
+
+import UserContext from '../../UserContext';
 
 const { Title } = Typography;
 
-const SupplierForm = () => {
+export const AddSuppliers = () => {
   const { user } = useContext(UserContext);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
@@ -45,16 +48,11 @@ const SupplierForm = () => {
     <>
       <Row justify='center' align='middle' style={{ height: '100vh' }}>
         <Col xs={20} sm={18} lg={10}>
-          <div style={{ padding: '10px' }}>
-            {success ? (
-              <Alert
-                message='Supplier successfully added'
-                type='success'
-                closeText='OK'
-                onClose={onClose}
-              />
-            ) : null}
-          </div>
+          <AlertSuccess
+            alertMessage='Supplier successfully added.'
+            success={success}
+            onClose={onClose}
+          />
           <Title level={2}>Add a Supplier</Title>
           <Form layout='horizontal' onFinish={onFinish}>
             <Form.Item label='Supplier Name' name='name'>
@@ -108,7 +106,11 @@ const SupplierForm = () => {
                   textAlign: 'right',
                 }}
               >
-                <Button type='primary' htmlType='submit' danger>
+                <Button
+                  type='primary'
+                  htmlType='submit'
+                  style={{ backgroundColor: '#150B41', color: '#FFF' }}
+                >
                   Submit
                 </Button>
               </Col>
@@ -119,5 +121,3 @@ const SupplierForm = () => {
     </>
   );
 };
-
-export default SupplierForm;

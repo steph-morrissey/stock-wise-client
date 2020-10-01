@@ -3,26 +3,31 @@ import { Card, Typography } from 'antd';
 
 const { Title, Text } = Typography;
 
-const RenderProductCards = ({ items, handleEvent }) => {
+const RenderProductCards = ({ items, handleEvent, buttonText }) => {
   return items.products.map((item) => {
     return (
       <div className='site-card-border-less-wrapper'>
         <Card
           key={item._id}
-          title={<Title level={3}>{item.name}</Title>}
+          title={<Title level={4}>{item.name}</Title>}
           bordered={false}
+          style={{
+            width: 300,
+            margin: '20px',
+            backgroundColor: '#F6F9FE',
+          }}
           extra={
             <button
               key={item._id}
               id={item._id}
               style={{
                 padding: '5px',
-                borderColor: '#FC760B',
-                backgroundColor: '#FC760B',
+                backgroundColor: '#150B41',
+                color: '#FFF',
               }}
               onClick={handleEvent}
             >
-              edit
+              {buttonText}
             </button>
           }
         >

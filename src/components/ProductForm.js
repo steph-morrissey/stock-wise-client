@@ -65,7 +65,11 @@ const ProductForm = ({
               textAlign: 'right',
             }}
           >
-            <Button type='primary' htmlType='submit' danger>
+            <Button
+              type='primary'
+              htmlType='submit'
+              style={{ backgroundColor: '#150B41', color: '#FFF' }}
+            >
               Submit
             </Button>
           </Col>
