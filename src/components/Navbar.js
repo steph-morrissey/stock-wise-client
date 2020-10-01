@@ -6,7 +6,6 @@ import {
   LoginOutlined,
   AppstoreOutlined,
   ScheduleOutlined,
-  StrikethroughOutlined,
 } from '@ant-design/icons';
 
 import UserContext from '../UserContext';

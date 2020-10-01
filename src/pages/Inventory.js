@@ -91,10 +91,9 @@ export const Inventory = () => {
           <PageHeader title='View Inventory' />
         </Row>
         <Row
-          style={{ display: 'flex', flexWrap: 'wrap' }}
+          style={{ display: 'flex', flexWrap: 'wrap', margin: '10px' }}
           justify='center'
           align='middle'
-          style={{ margin: '10px' }}
         >
           <Select
             placeholder='Select a option and change input text above'
